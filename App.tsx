@@ -12,7 +12,7 @@ function App() {
   return (
 		<NativeBaseProvider>
 			<LoginScreen />
-			<StatusBar style="auto" />
+			<StatusBar style="light" />
 		</NativeBaseProvider>
   );
 }
