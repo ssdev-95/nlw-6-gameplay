@@ -1,4 +1,6 @@
-import React from "react";
+import React, {
+	useMemo
+} from "react";
 
 import {
 	Box,
@@ -9,18 +11,37 @@ import {
 	HStack
 } from "native-base";
 
+import { useMatch } from "../hooks/useMatch";
+
 export function CategoryCard({ category }: any) {
+	const { selectCategory, selected } = useMatch()
+
+	const isSelected = useMemo(()=>{
+		return (category === selected);
+	},[selected])
+
   function handlePress() {
-		console.log(category)
+		selectCategory(category.item.name)
 	}
 
 	return (
 		<Button
 			width={32}
 			height={32}
-			bg="rgba(0,0,0,0.28)"
+			bg={
+				isSelected ?
+				"tomato.700" :
+				"darkBlue.700"
+			}
+			borderColor={
+				isSelected ?
+				"red.500" :
+				"darkBlue.500"
+			}
+			borderWidth={1}
 			mx={2}
 			borderRadius={8}
+			_pressed={{ bg: "darkBlue.500" }}
 			onPress={handlePress}
 		>
 			<Center h="full">

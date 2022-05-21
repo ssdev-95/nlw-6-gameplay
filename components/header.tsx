@@ -15,7 +15,11 @@ import {
 	MaterialCommunityIcons
 } from '@expo/vector-icons';
 
-export function Header({ user }:any) {
+import { useAuth } from "../hooks/useAuth";
+
+export function Header() {
+	const { signOut, user } = useAuth()
+
 	return (
 		<Box
 			width="full"
@@ -24,12 +28,18 @@ export function Header({ user }:any) {
 			py={2}
 		>
 			<HStack width="full" space={4}>
-				<Image
+				<Button
+					onPress={signOut}
 					size={45}
 					borderRadius={8}
-					source={{uri:user.avatar}}
-					alt="User profile picture"
-				/>
+				>
+					<Image
+						size={45}
+						borderRadius={8}
+						source={{uri:user.avatar}}
+						alt="User profile picture"
+					/>
+				</Button>
 
 				<VStack flex={1}>
 					<Heading color="blue.50">

@@ -1,4 +1,7 @@
-import React from "react";
+import React, {
+	useEffect
+}from "react";
+
 import {
 	Box,
 	VStack
@@ -7,13 +10,20 @@ import {
 import { Header } from "../components/header";
 import { Categories } from "../components/categories";
 import { Matches } from "../components/matches";
+import { useAuth } from "../hooks/useAuth";
 
-function HomeScreen() {
-	const user = {
-		avatar: "https://github.com/xSallus.png",
-		name: "Sarô Senpai",
-		bio: "AutoDevs vamos codar!"
+function HomeScreen({ navigation }: any) {
+	const { user } = useAuth()
+
+	function goBack() {
+		navigation.goBack()
 	}
+
+	useEffect(()=>{
+		if(!Object.entries(user).length) {
+			goBack()
+		}
+	},[user])
 
 	return (
 		<VStack
@@ -21,9 +31,9 @@ function HomeScreen() {
 			px={2}
 			width="full"
 			height="full"
-			bg="darkBlue.800"
+			bg="gameplay.background"
 		>
-			<Header user={user}	/>
+			<Header />
 			<Categories />
 			<Matches />
 		</VStack>

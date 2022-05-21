@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
 	Flex,
@@ -16,12 +16,26 @@ import {
 	MaterialCommunityIcons
 } from '@expo/vector-icons';
 
+import { useAuth } from "../hooks/useAuth";
+
 function LoginScreen({ navigation }: any) {
+	const { signIn, user } = useAuth()
+
+	function goHome() {
+		navigation.navigate('Home')
+	}
+
+	useEffect(() => {
+		if(Object.entries(user).length) {
+			goHome()
+		}
+	}, [user])
+
 	return (
 		<Flex
 			width="full"
 			height="full"
-			bg="darkBlue.800"
+			bg="gameplay.background"
 		>
 			<Image
 				source={require("../assets/illustration.png")}
@@ -56,7 +70,7 @@ function LoginScreen({ navigation }: any) {
 					borderRadius={8}
 					width={210}
 					mx="auto"
-					onPress={() => navigation.navigate('Home')}
+					onPress={signIn}
 				>
 					<HStack width="full" space={6}>
 						<Icon
