@@ -16,11 +16,7 @@ import {
 	MaterialCommunityIcons
 } from '@expo/vector-icons';
 
-/*
- * <MaterialCommunityIcons name="discord" size={24} color="black" />
-*/
-
-function LoginScreen() {
+function LoginScreen({ navigation }: any) {
 	return (
 		<Flex
 			width="full"
@@ -62,6 +58,7 @@ function LoginScreen() {
 					borderRadius={8}
 					width={210}
 					mx="auto"
+					onPress={() => navigation.navigate('Home')}
 				>
 					<HStack width="full" space={6}>
 						<Icon
