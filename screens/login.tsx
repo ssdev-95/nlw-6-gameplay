@@ -24,9 +24,7 @@ function LoginScreen({ navigation }: any) {
 			bg="darkBlue.800"
 		>
 			<Image
-				source={
-					require("../assets/illustration.png")
-				}
+				source={require("../assets/illustration.png")}
 				width="full"
 				alt="Gameplay icon"
 			/>
