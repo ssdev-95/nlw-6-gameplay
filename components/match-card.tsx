@@ -30,9 +30,7 @@ created_by: string;
 
 
 type MatchCardProps = ButtonProps & {
-	match: {
-		item: IMatch
-	}
+	match: IMatch
 }
 
 export function MatchCard({
@@ -58,14 +56,14 @@ export function MatchCard({
 				width="full"
 				space={1}
 			>
-				{match.item.squad.badge ? (
+				{match.squad.badge ? (
 					<Image
-					  source={{uri:match.item.squad.badge}}
+					  source={{uri:match.squad.badge}}
 						size={16}
 						borderRadius={8}
 						mx={2}
 						my="auto"
-						alt={match.item.id}
+						alt={match.id}
 					/>
 				) : (
 					<Icon
@@ -90,18 +88,18 @@ export function MatchCard({
 							color="blue.50"
 							fontSize={24}
 						>
-							{match.item.squad.name}
+							{match.squad.name}
 						</Text>
 						<Text
 							color="blue.200"
 							ml="14%"
 						>
-							{match.item.category}
+							{match.category}
 						</Text>
 					</HStack>
 
 					<Text color="blue.200">
-						{match.item.subject}
+						{match.subject}
 					</Text>
 
 					<HStack
@@ -116,7 +114,7 @@ export function MatchCard({
 							size={5}
 						/>
 						<Text color="blue.50">
-							{match.item.date}
+							{match.date}
 						</Text>
 						</HStack>
 						<HStack
@@ -134,7 +132,7 @@ export function MatchCard({
 							color="blue.50"
 							fontSize={16}
 						>
-							{match.item.players_count}
+							{match.players_count}
 						</Text>
 						</HStack>
 					</HStack>

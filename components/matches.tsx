@@ -64,7 +64,7 @@ export function Matches({ redirect }: MatchesProps) {
 
 	const renderMatch = (match: IMatch) => (
 		<MatchCard
-			match={match}
+			match={match.item}
 			onPress={()=>handleRedirect(match.item.id)}
 		/>
 	)
