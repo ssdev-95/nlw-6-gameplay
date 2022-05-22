@@ -4,7 +4,7 @@ import {
 	Text,
 	Icon,
 	HStack,
-	Button
+	IconButton
 } from "native-base";
 
 import {
@@ -34,12 +34,13 @@ export function Header({
 				alignItems="center"
 				width="full"
 			>
-				<Button
+				<IconButton
 					onPress={goBack}
 					size={8}
 					bg="transparent"
 					_pressed={{
-						bg: "transparent"
+						bg: "transparent",
+						opacity: 0.68
 					}}
 					ml={0}
 					mr={
@@ -47,23 +48,29 @@ export function Header({
 						0 :
 						"auto"
 					}
-				>
-					<Icon
-						as={MaterialCommunityIcons}
-						name="arrow-left"
-						color="blue.50"
-						size={8}
-					/>
-				</Button>
+					icon={
+						<Icon
+							as={MaterialCommunityIcons}
+							name="arrow-left"
+							color="blue.50"
+							size={8}
+						/>
+					}
+				/>
 				<Text
 					color="blue.50"
+					mt={
+						title === "Schedule" ?
+						0 :
+						-2
+					}
 					mr="auto"
 					ml={
 						action ?
 						"auto" :
 						0
 					}
-					fontSize={28}
+					fontSize={24}
 				>{title}</Text>
 				{action && action}
 			</HStack>

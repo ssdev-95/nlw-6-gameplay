@@ -7,11 +7,12 @@ import {
 	Icon,
 	Text,
 	Image,
-	Button,
 	HStack,
 	VStack,
 	Divider,
-	FlatList
+	Heading,
+	FlatList,
+	IconButton
 } from "native-base";
 
 import {
@@ -25,6 +26,10 @@ import {
 import {
 	PlayerCard
 } from "../components/player-card";
+
+import {
+	DiscordButton
+} from "../components/discord-button";
 
 import { useMatch } from "../hooks/useMatch";
 
@@ -58,11 +63,20 @@ function DetailedMatch({ navigation }:any) {
 				title={squad.name}
 				goBack={()=>navigation.goBack()}
 				action={
-					<Icon
-						as={MaterialCommunityIcons}
-						name="share-variant"
-						size={8}
-						color="red.700"
+					<IconButton
+						bg="transparent"
+						_pressed={{
+							bg: "transparent",
+							opacity: 0.68
+						}}
+						icon={
+							<Icon
+								as={MaterialCommunityIcons}
+								name="share-variant"
+								size={8}
+								color="red.700"
+							/>
+						}
 					/>
 				}
 			/>
@@ -72,24 +86,48 @@ function DetailedMatch({ navigation }:any) {
 					width="full"
 					alt="A lol image"
 				/>
-				<Text
-					color="blue.50"
-					fontSize={36}
-					fontWeight={600}
-					left={8}
-					bottom={8}
+				<VStack
+					height={20}
+					space={2}
 					position="absolute"
+					bottom={8}
+					left={8}
 				>
-					{match.subject + "\n" }
+					<Heading
+						color="blue.50"
+						fontSize={36}
+					  lineHeight={32}
+						mb={4}
+					>
+						{match.subject}
+					</Heading>
+
 					<Text
-						mt={4}
 						fontSize={18}
 						fontWeight={400}
 						color="blue.200"
 					>
 						{match.name}
 					</Text>
-				</Text>
+
+					<HStack
+						space={3}
+						alignItems="center"
+					>
+						<Icon
+							as={MaterialCommunityIcons}
+							name="calendar-blank"
+							color="red.500"
+							size={4}
+						/>
+						<Text
+							color="gray.500"
+							fontSize={16}
+						>
+							{match.date}
+						</Text>
+					</HStack>
+				</VStack>
 			</Box>
 			<HStack
 				width="full"
@@ -106,7 +144,7 @@ function DetailedMatch({ navigation }:any) {
 				Players
 				</Text>
 				<Text
-					color="blue.100"
+					color="gray.400"
 					fontSize={16}
 				>
 					Total {squad.players.length}
@@ -134,28 +172,9 @@ function DetailedMatch({ navigation }:any) {
 				/>
 			</VStack>
 
-			<Button
-				colorScheme="red"
-				borderRadius={8}
-				width={200}
-				mx="auto"
-			>
-				<HStack width="full" space={4}>
-					<Icon
-						as={MaterialCommunityIcons}
-						name="discord"
-						color="blue.50"
-						size={6}
-					/>
-						<Divider
-							color="blue.50"
-							orientation="vertical"
-						/>
-						<Text color="blue.50">
-							Join Discord server
-						</Text>       
-				</HStack>
-			</Button>
+			<DiscordButton
+				title="Join Discord server"
+			/>
 		</VStack>
 	)
 }

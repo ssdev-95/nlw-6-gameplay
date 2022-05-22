@@ -25,7 +25,7 @@ function ScheduleMatch({ navigation }:any) {
 			py={10}
 		>
 			<Header
-				title="Schedule a match"
+				title="Schedule"
 				goBack={()=>navigation.goBack()}
 			/>
 			<Categories

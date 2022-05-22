@@ -61,7 +61,7 @@ export function CategoryCard({
 						bg={
 							selected === category.name ?
 							"red.700" :
-							"gray.400"
+							"gray.600"
 						}
 						borderRadius={12}
 					/>

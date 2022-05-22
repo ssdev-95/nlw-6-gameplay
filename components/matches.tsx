@@ -83,7 +83,7 @@ export function Matches({ redirect }: MatchesProps) {
 				px={4}
 			>
 				<Text color="blue.50">Scheduled matches</Text>
-				<Text color="blue.50">
+				<Text color="gray.400">
 					{`Total ${matches.length ?? 0}`}
 				</Text>  
 			</HStack>

@@ -6,19 +6,20 @@ import {
 	Heading,
 	Text,
 	VStack,
-	Button,
-	Icon,
-	HStack,
-	Divider
+	HStack
 } from "native-base";
 
 import {
 	MaterialCommunityIcons
-} from '@expo/vector-icons';
+} from "@expo/vector-icons";
 
 import {
 	storeData
 } from "../services/storage";
+
+import {
+	DiscordButton
+} from "../components/discord-button";
 
 import { useAuth } from "../hooks/useAuth";
 import { useMatch } from "../hooks/useMatch";
@@ -70,36 +71,17 @@ function LoginScreen({ navigation }: any) {
 					play matches!
 				</Heading>
 				<Text
-					color="blue.50"
+					color="gray.400"
 					fontSize={16}
 					textAlign="center"
 				>
 					Create groups and join with you friend to play {'\n'}
 					your favorite games.
 				</Text>
-				<Button
-					colorScheme="red"
-					borderRadius={8}
-					width={210}
-					mx="auto"
+				<DiscordButton
+					title="Login with Discord"
 					onPress={signIn}
-				>
-					<HStack width="full" space={6}>
-						<Icon
-							as={MaterialCommunityIcons}
-							name="discord"
-							color="blue.50"
-							size={6}
-						/>
-						<Divider
-							color="blue.50"
-							orientation="vertical"
-						/>
-						<Text color="blue.50">
-							Login with Discord
-						</Text>
-					</HStack>
-				</Button>
+				/>
 			</VStack>
 		</Flex>
 	);

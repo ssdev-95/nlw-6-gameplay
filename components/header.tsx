@@ -5,6 +5,7 @@ import {
 	HStack,
 	VStack,
 	Button,
+	IconButton,
 	Image,
 	Icon,
 	Text,
@@ -54,19 +55,24 @@ export function Header({ action }: HeaderProps) {
 					</Text>
 				</VStack>                                     
 
-				<Button
+				<IconButton
 					bg="red.500"
 					p={3}
 					borderRadius={8}
 					onPress={action}
-				>
-					<Icon
-						as={MaterialCommunityIcons}
-						name="plus"                               
-						color="blue.50"
-						size="lg"
-					/>
-				</Button>
+					_pressed={{
+						bg: "red.500",
+						opacity: 0.68
+					}}
+					icon={
+						<Icon
+							as={MaterialCommunityIcons}
+							name="plus"                               
+							color="blue.50"
+							size="lg"
+						/>
+					}
+				/>
 			</HStack>
 		</Box>
 	)

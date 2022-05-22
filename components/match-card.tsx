@@ -91,14 +91,14 @@ export function MatchCard({
 							{match.squad.name}
 						</Text>
 						<Text
-							color="blue.200"
+							color=grayy.400"
 							ml="14%"
 						>
 							{match.category}
 						</Text>
 					</HStack>
 
-					<Text color="blue.200">
+					<Text color="gray.400">
 						{match.subject}
 					</Text>
 
