@@ -1,11 +1,16 @@
 import {
 	Box,
+	Icon,
 	Text,
 	Image,
 	HStack,
 	VStack,
 	Divider
 } from "native-base";
+
+import {
+	MaterialCommunityIcons
+} from "@expo/vector-icons";
 
 type PlayerType = {
 	name:string;
@@ -25,13 +30,22 @@ export function PlayerCard({ player }: CardProps) {
 			width="full"
 		>
 			<HStack>
-				<Image
-					source={{uri:player.avatar}}
-					size={16}
-					borderRadius={8}
-					alt={player.name}
-					mx={4}
-				/>
+				{player.avatar ? (
+					<Image
+						source={{uri:player.avatar}}
+						size={16}
+						borderRadius={8}
+						alt={player.name}
+						mx={4}
+					/>
+				) : (
+					<Icon
+						color="red.700"
+						as={MaterialCommunityIcons}
+						name="account"
+						size={16}
+					/>
+				)}
 				<VStack justifyContent="space-evenly">
 					<Text
 						color="blue.50"

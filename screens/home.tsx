@@ -1,6 +1,10 @@
 import React, {
-	useEffect
+	useEffect,
+	useCallback
 }from "react";
+
+import { useFocusEffect } from "@react-navigation/native";
+
 
 import {
 	Box,
@@ -11,9 +15,11 @@ import { Header } from "../components/header";
 import { Categories } from "../components/categories";
 import { Matches } from "../components/matches";
 import { useAuth } from "../hooks/useAuth";
+import { useMatch } from "../hooks/useMatch";
 
 function HomeScreen({ navigation }: any) {
 	const { user } = useAuth()
+	const { retrieveMatches } = useMatch()
 
 	function goBack() {
 		navigation.goBack()
@@ -24,6 +30,20 @@ function HomeScreen({ navigation }: any) {
 			goBack()
 		}
 	},[user])
+
+	useFocusEffect(
+		useCallback(() => {
+			const { index, routes } = navigation.getState()
+			const route = routes[index].name
+
+			if(route === "Home") {
+				retrieveMatches()
+					.catch(err => console.log(err))
+			}
+
+			return () => console.log("Home gone out of focus")
+		}, [])
+	)
 
 	return (
 		<VStack
@@ -36,7 +56,7 @@ function HomeScreen({ navigation }: any) {
 			<Header action={() => {
 				navigation.navigate('ScheduleMatch')
 			}} />
-			<Categories />
+			<Categories type="show" />
 			<Matches
 				redirect={(screen:string) => {
 					navigation.navigate(screen)

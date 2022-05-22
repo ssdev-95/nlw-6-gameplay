@@ -39,13 +39,21 @@ const categories = [
 	}
 ]
 
-const extractKey = (category: ICategory) => category.id
+type CategoriesProps = {
+	type:string;
+}
 
-const renderCategory = (category: ICategory) => (
-	<CategoryCard category={category}	/>
-)
+export function Categories({ type }) {
 
-export function Categories() {
+	const extractKey = (category: ICategory) => category.id
+
+	const renderCategory = (category: ICategory) => (
+		<CategoryCard
+			category={category.item}
+			type={type}
+		/>
+	)
+
 	return (
 		<HStack width="full" my={8} py={2} >
 			<FlatList

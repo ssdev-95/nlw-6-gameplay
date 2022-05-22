@@ -1,6 +1,4 @@
-import React, {
-	useMemo
-} from "react";
+import React from "react";
 
 import {
 	Box,
@@ -8,51 +6,79 @@ import {
 	Image,
 	Center,
 	Button,
-	HStack
+	HStack,
+	Divider
 } from "native-base";
 
 import { useMatch } from "../hooks/useMatch";
+import { ICategory } from "../custom-types.d";
 
-export function CategoryCard({ category }: any) {
-	const { selectCategory, selected } = useMatch()
+interface CategoryProps {
+	category:ICategory;
+	type:string;
+}
 
-	const isSelected = useMemo(()=>{
-		return (category === selected);
-	},[selected])
+export function CategoryCard({
+	category, type
+}: CategoryProps) {
+	const { selected, selectCategory } = useMatch()
 
   function handlePress() {
-		selectCategory(category.item.name)
+		selectCategory(category.name)
 	}
 
 	return (
 		<Button
 			width={32}
 			height={32}
-			bg="darkBlue.700"
+			position="relative"
+			bg={
+				selected === category.name ?
+				"darkBlue.500" :
+				"darkBlue.700"
+			}
 			borderColor="darkBlue.500"
 			borderWidth={1}
 			mx={2}
 			borderRadius={8}
 			_pressed={{
 				opacity: 0.48,
-				bg: "darkBlue.700"
+				bg: (
+					selected === category.name ?
+					"darkBlue.500" :
+					"darkBlue.700"
+					)
 			}}
 			onPress={handlePress}
 		>
-			<Center h="full">
-			<Image
-				source={{uri:category.item.icon}}
-				size={12}
-				alt={`${category.item.name} icon`}
-			/>
+			<Center height={100} width={100}>
+				{type === "schedule" && (
+					<Divider
+						size={2}
+						position="absolute"
+						top={-1}
+						right={-1}
+						bg={
+							selected === category.name ?
+							"red.700" :
+							"gray.400"
+						}
+						borderRadius={12}
+					/>
+				)}
+				<Image
+					source={{uri:category.icon}}
+					size={12}
+					alt={`${category.name} icon`}
+				/>
 			
-			<Text
-				color="blue.50"
-				fontSize={24}
-				mt={2}
-			>
-				{category.item.name}
-			</Text>
+				<Text
+					color="blue.50"
+					fontSize={24}
+					mt={2}
+				>
+					{category.name}
+				</Text>
 			</Center>
 		</Button>
 	);

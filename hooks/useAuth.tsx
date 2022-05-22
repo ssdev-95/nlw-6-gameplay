@@ -1,12 +1,20 @@
 import React, {
 	createContext,
 	useContext,
+	useEffect,
 	useState,
-	ReactNode
+	ReactNode,
 } from "react";
 
 import * as AuthSession from 'expo-auth-session';
 
+import {
+	storeData,
+	retrieveData,
+	eraseData
+} from "../services/storage";
+
+import { useMatch } from "./useMatch";
 import { api } from "../services/api";
 import { IUser } from "../custom-types.d";
 
@@ -37,12 +45,15 @@ type AuthData = {
 
 const authUrl = `${api.defaults.baseURL}/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
 
+const authKey = "@gameplay::user";
+
 const AuthContext = createContext({} as AuthData)
 
 export function AuthProvider({
 	children
 }: ProviderProps) {
 	const [user, setUser] = useState<IUser>({} as IUser)
+	const { key: matchKey } = useMatch()
 
 	const signIn = async () => {
 		/*let error:any
@@ -76,18 +87,37 @@ export function AuthProvider({
 		} finally {
 			console.log(user)
 		}*/
-		setUser({
+
+		const response = {
 			id: '28shsnewkaKwkwUYW2AU-71188',
 			name: 'Sarô Senpai',
 			avatar: 'https://github.com/xSallus.png',
 			bio: 'Another otaku fdp.'
-		})
+		}
+
+		setUser(response)
+		await storeData(
+			authKey,
+			JSON.stringify(response)
+		).catch(err=>console.error(err))
 	}
 
 	const signOut = async signOut => {
 		const response = {}
 		setUser(response)
+		await eraseData([authKey, matchKey])
+			.catch(err => console.error(err))
 	}
+
+	useEffect(()=>{
+		retrieveData(authKey)
+			.then((data)=>{
+				if(data) {
+					const parsed = JSON.parse(data)
+					setUser(parsed)
+				}
+			})
+	}, [])
 
 	return (
 		<AuthContext.Provider value={{

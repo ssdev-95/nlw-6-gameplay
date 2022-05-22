@@ -22,3 +22,9 @@ export interface IUser {
 	token?: string;
 	available?: boolean;
 }
+
+export type ICategory = {
+	id: string;
+	name: string;
+	icon: string;
+}

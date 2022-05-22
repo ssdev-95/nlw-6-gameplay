@@ -13,7 +13,7 @@ import {
 
 import {
 	MaterialCommunityIcons
-} from '@expo/vector-icons';
+} from "@expo/vector-icons";
 
 import { IMatch } from "../custom-types.d";
 

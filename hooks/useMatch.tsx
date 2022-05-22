@@ -2,19 +2,24 @@ import React, {
 	createContext,
 	useContext,
   ReactNode,
-	useEffect,
 	useState
 } from "react";
 
+import {
+	storeData,
+	retrieveData
+} from "../services/storage";
 import { IMatch } from "../custom-types.d";
 
 type MatchContextData = {
 	matches: IMatch[];
 	scheduleMatch: (match:IMatch) => void;
+	retrieveMatches: () => Promise<void>;
 	selectCategory: (option:string) => void;
 	selectMatch: (id:string) => void;
 	selected: string;
 	matchId: string;
+	key:string;
 }
 
 type ProviderProps = {
@@ -31,81 +36,44 @@ export function MatchProvider({
 	const [matches, setMatches] = useState<IMatch[]>([])
 	const [selected, setSelected] = useState("none")
 	const [matchId, setMatchId] = useState("")
+	const key = "@gameplay::matches";
 
 	function scheduleMatch(match:IMatch) {
-		setMatches(prev => [...prev, match])
+		const updated = [...matches, match]
+
+		setMatches(upated)
+		storeData(key,JSON.stringify(updated))
 	}
 
 	function selectCategory(option:string) {
-		setSelected(
-			prev => prev === option ? "none" : option
-		)
+		const value = (selected === option) ? "none" : option
+		setSelected(value)
 	}
 
 	function selectMatch(id:string) {
 		setMatchId(id)
 	}
 
-	useEffect(()=>{
-		setMatches(prev => [
-			...prev,
-			{
-				id: '19sdhms29jjUHqj29-82jj',
-				name: '🔥 Bora queimar tudo 🔥',
-				subject: 'Apex Legends',
-				category: 'ranked',
-				squad: {
-					name: 'Legends of tomorrow',
-					badge: 'https://github.com/rocketseat-education.png',
-					players: [
-						{
-							id: "82ejx8xJbUG282hah-882j2",
-							name: "Diego Fernandes",
-							avatar: "https://github.com/diego3g.png",
-							available: true
-						}, {
-							id: "2ejxGwi2j3e8s8ijh-882j2",
-							name: "Abraço do Maykao",
-							avatar: "https://github.com/maykbrito.png",
-							available: true
-						}, {
-							id: "290kdnlqpaUqaIhah-84wp2",
-							name: "Capita",
-							avatar: "https://github.com/birobirobiro.png",
-							available: false
-						}, {
-							id: "0Kk0wmgoIHq28d8hh-882j2",
-							name: "Rodrigo Gonçalves",
-							avatar: "https://github.com/rodrigorgtic.png",
-							available: true
-						}, {
-							id: "929dcjznnsIgfNhah-10soj",
-							name: "Jakelliny Gracielly",
-							avatar: "https://github.com/jakeliny.png",
-							available: false
-						}, {
-							id: "19HJA!91m1madjsk-1oosoj",
-							name: "Tio Yan",
-							avatar: "https://github.com/yants95.png",
-							available: false
-						}
-					]
-				},
-				players_count: 6,
-				date: 'Fri, August 25 2022 - 19:45',
-				created_by: 'saro-senpai'
-			}
-		])
-	}, [])
+	async function retrieveMatches() {
+		const stored = await retrieveData(key)
+	
+		if(!stored) return;
+		
+		const parsed = JSON.parse(stored)
+		setMatches(parsed)
+
+	}
 
 	return (
 		<MatchContext.Provider value={{
 			matches,
 			scheduleMatch,
 			selectCategory,
+			retrieveMatches,
 			selectMatch,
 			selected,
-			matchId
+			matchId,
+			key
 		}}>
 			{ children }
 		</MatchContext.Provider>

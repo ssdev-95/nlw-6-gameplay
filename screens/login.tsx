@@ -16,10 +16,17 @@ import {
 	MaterialCommunityIcons
 } from '@expo/vector-icons';
 
-import { useAuth } from "../hooks/useAuth";
+import {
+	storeData
+} from "../services/storage";
 
+import { useAuth } from "../hooks/useAuth";
+import { useMatch } from "../hooks/useMatch";
+
+import { matches as mockedData } from "../mock.json";
 function LoginScreen({ navigation }: any) {
 	const { signIn, user } = useAuth()
+	const { key } = useMatch()
 
 	function goHome() {
 		navigation.navigate('Home')
@@ -27,6 +34,10 @@ function LoginScreen({ navigation }: any) {
 
 	useEffect(() => {
 		if(Object.entries(user).length) {
+			storeData(
+				key,
+				JSON.stringify(mockedData)
+			)
 			goHome()
 		}
 	}, [user])

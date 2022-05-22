@@ -9,6 +9,10 @@ import {
 	Header
 } from "../components/schedule-header";
 
+import {
+	Categories
+} from "../components/categories"
+
 /*import {
 	MaterialCommunityIcons
 } from '@expo/vector-icons';*/
@@ -23,6 +27,9 @@ function ScheduleMatch({ navigation }:any) {
 			<Header
 				title="Schedule a match"
 				goBack={()=>navigation.goBack()}
+			/>
+			<Categories
+				type="schedule"
 			/>
 		</VStack>
 	)
