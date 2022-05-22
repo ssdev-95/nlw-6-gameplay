@@ -91,7 +91,7 @@ export function MatchCard({
 							{match.squad.name}
 						</Text>
 						<Text
-							color=grayy.400"
+							color="gray.400"
 							ml="14%"
 						>
 							{match.category}
