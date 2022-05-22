@@ -19,29 +19,41 @@ type CardProps = {
 
 export function PlayerCard({ player }: CardProps) {
 	return (
-		<Box>
+		<Box
+			mt={2}
+			py={2}
+			width="full"
+		>
 			<HStack>
 				<Image
 					source={{uri:player.avatar}}
+					size={16}
+					borderRadius={8}
 					alt={player.name}
+					mx={4}
 				/>
-				<VStack>
-					<Text color="blue.50">{player.name}</Text>
-					<HStack>
+				<VStack justifyContent="space-evenly">
+					<Text
+						color="blue.50"
+						fontSize={24}
+					>
+						{player.name}
+					</Text>
+					<HStack alignItems="center" space={3}>
 						<Divider
-							color={
+							bg={
 								player.available ?
-								"green.900" :
+								"limegreen" :
 								"red.700"
 							}
 							size={2}
-							borerRadius="100%"
+							borderRadius={100}
 						/>
-						<Text color="blue.50">
+						<Text color="blue.100">
 							{
 								player.available ?
-								"Available" :
-								"Unavailable"
+								"Ready" :
+								"So far away..."
 							}
 						</Text>
 					</HStack>

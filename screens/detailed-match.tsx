@@ -44,38 +44,9 @@ const extractKey = (player:PlayerType) => player.id;
 function DetailedMatch({ navigation }:any) {
 	const { matches, matchId } = useMatch()
 
-	const match = useMemo(()=>{
+	const { squad, ...match } = useMemo(()=>{
 		return matches.find(item => item.id === matchId)
 	},[matchId])
-
-	const players = [
-		{
-			id: "82ejx8xJbUG282hah-882j2",
-			name: "Diego Fernandes",
-			avatar: "https:/github.com/diego3g.png",
-			available: true
-		}, {
-			id: "2ejxGwi2j3e8s8ijh-882j2",
-			name: "Mayk Brito",
-			avatar: "https:/github.com/diego3g.png",
-			available: true
-		}, {
-			id: "290kdnlqpaUqaIhah-84wp2",
-			name: "Thiago Luchtenberg",
-			avatar: "https:/github.com/diego3g.png",
-			available: true
-		}, {
-			id: "0Kk0wmgoIHq28d8hh-882j2",
-			name: "Rodrigo Gonçalves",
-			avatar: "https:/github.com/diego3g.png",
-			available: true
-		},{
-			id: "929dcjznnsIgfNhah-10soj",
-			name: "Jakelliny Gracielly",
-			avatar: "https:/github.com/diego3g.png",
-			available: true     
-		}
-	]
 
 	return (
 		<VStack
@@ -84,7 +55,7 @@ function DetailedMatch({ navigation }:any) {
 			py={10}
 		>
 			<Header
-				title={match.squad.name}
+				title={squad.name}
 				goBack={()=>navigation.goBack()}
 				action={
 					<Icon
@@ -109,7 +80,15 @@ function DetailedMatch({ navigation }:any) {
 					bottom={8}
 					position="absolute"
 				>
-					{match.subject}
+					{match.subject + "\n" }
+					<Text
+						mt={4}
+						fontSize={18}
+						fontWeight={400}
+						color="blue.200"
+					>
+						{match.name}
+					</Text>
 				</Text>
 			</Box>
 			<HStack
@@ -130,11 +109,14 @@ function DetailedMatch({ navigation }:any) {
 					color="blue.100"
 					fontSize={16}
 				>
-					Total {players.length}
+					Total {squad.players.length}
 				</Text>
 			</HStack>
 
-			<VStack>
+			<VStack
+				height="45%"
+				mb={6}
+			>
 				<FlatList
 					width="full"
 					ItemSeparatorComponent={() => (
@@ -145,9 +127,9 @@ function DetailedMatch({ navigation }:any) {
 							bg="darkBlue.700"
 							borderRadius={10}
 						/>
-					)}    
+					)}
+					data={squad.players}
 					renderItem={renderPlayers}
-					data={players}
 					keyExtractor={extractKey}
 				/>
 			</VStack>

@@ -51,14 +51,47 @@ export function MatchProvider({
 			...prev,
 			{
 				id: '19sdhms29jjUHqj29-82jj',
-				name: 'Bora queimar tudo',
+				name: '🔥 Bora queimar tudo 🔥',
 				subject: 'Apex Legends',
 				category: 'ranked',
 				squad: {
 					name: 'Legends of tomorrow',
-					badge: 'https://github.com/rocketseat-education.png'
+					badge: 'https://github.com/rocketseat-education.png',
+					players: [
+						{
+							id: "82ejx8xJbUG282hah-882j2",
+							name: "Diego Fernandes",
+							avatar: "https://github.com/diego3g.png",
+							available: true
+						}, {
+							id: "2ejxGwi2j3e8s8ijh-882j2",
+							name: "Abraço do Maykao",
+							avatar: "https://github.com/maykbrito.png",
+							available: true
+						}, {
+							id: "290kdnlqpaUqaIhah-84wp2",
+							name: "Capita",
+							avatar: "https://github.com/birobirobiro.png",
+							available: false
+						}, {
+							id: "0Kk0wmgoIHq28d8hh-882j2",
+							name: "Rodrigo Gonçalves",
+							avatar: "https://github.com/rodrigorgtic.png",
+							available: true
+						}, {
+							id: "929dcjznnsIgfNhah-10soj",
+							name: "Jakelliny Gracielly",
+							avatar: "https://github.com/jakeliny.png",
+							available: false
+						}, {
+							id: "19HJA!91m1madjsk-1oosoj",
+							name: "Tio Yan",
+							avatar: "https://github.com/yants95.png",
+							available: false
+						}
+					]
 				},
-				players_count: 1,
+				players_count: 6,
 				date: 'Fri, August 25 2022 - 19:45',
 				created_by: 'saro-senpai'
 			}
