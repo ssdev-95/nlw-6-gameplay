@@ -12,7 +12,11 @@ type MatchContextData = {
 	matches: IMatch[];
 	scheduleMatch: (match:IMatch) => void;
 	selectCategory: (option:string) => void;
+	selectMatch: (id:string) => void;
+	selected: string;
+	matchId: string;
 }
+
 type ProviderProps = {
 	children: ReactNode;
 }
@@ -26,6 +30,7 @@ export function MatchProvider({
 }: ProviderProps) {
 	const [matches, setMatches] = useState<IMatch[]>([])
 	const [selected, setSelected] = useState("none")
+	const [matchId, setMatchId] = useState("")
 
 	function scheduleMatch(match:IMatch) {
 		setMatches(prev => [...prev, match])
@@ -35,6 +40,10 @@ export function MatchProvider({
 		setSelected(
 			prev => prev === option ? "none" : option
 		)
+	}
+
+	function selectMatch(id:string) {
+		setMatchId(id)
 	}
 
 	useEffect(()=>{
@@ -47,7 +56,7 @@ export function MatchProvider({
 				category: 'ranked',
 				squad: {
 					name: 'Legends of tomorrow',
-					badge: ''
+					badge: 'https://github.com/rocketseat-education.png'
 				},
 				players_count: 1,
 				date: 'Fri, August 25 2022 - 19:45',
@@ -60,7 +69,10 @@ export function MatchProvider({
 		<MatchContext.Provider value={{
 			matches,
 			scheduleMatch,
-			selectCategory
+			selectCategory,
+			selectMatch,
+			selected,
+			matchId
 		}}>
 			{ children }
 		</MatchContext.Provider>

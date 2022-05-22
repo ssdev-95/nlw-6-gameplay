@@ -28,20 +28,15 @@ export function CategoryCard({ category }: any) {
 		<Button
 			width={32}
 			height={32}
-			bg={
-				isSelected ?
-				"tomato.700" :
-				"darkBlue.700"
-			}
-			borderColor={
-				isSelected ?
-				"red.500" :
-				"darkBlue.500"
-			}
+			bg="darkBlue.700"
+			borderColor="darkBlue.500"
 			borderWidth={1}
 			mx={2}
 			borderRadius={8}
-			_pressed={{ bg: "darkBlue.500" }}
+			_pressed={{
+				opacity: 0.48,
+				bg: "darkBlue.700"
+			}}
 			onPress={handlePress}
 		>
 			<Center h="full">

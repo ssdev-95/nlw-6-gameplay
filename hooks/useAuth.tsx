@@ -45,7 +45,7 @@ export function AuthProvider({
 	const [user, setUser] = useState<IUser>({} as IUser)
 
 	const signIn = async () => {
-		let error:any
+		/*let error:any
 		try {
 			const { type, params } = await AuthSession
         .startAsync({ authUrl })
@@ -75,7 +75,13 @@ export function AuthProvider({
 			throw new Error(error)
 		} finally {
 			console.log(user)
-		}
+		}*/
+		setUser({
+			id: '28shsnewkaKwkwUYW2AU-71188',
+			name: 'Sarô Senpai',
+			avatar: 'https://github.com/xSallus.png',
+			bio: 'Another otaku fdp.'
+		})
 	}
 
 	const signOut = async signOut => {

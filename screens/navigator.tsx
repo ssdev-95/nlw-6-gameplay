@@ -1,6 +1,8 @@
 import React from "react";
 import LoginScreen from "./login";
 import HomeScreen from "./home";
+import ScheduleMatch from "./schedule-match";
+import DetailedMatch from "./detailed-match";
 
 import {
 	NavigationContainer
@@ -25,9 +27,20 @@ function StackNavigator() {
 					name="Login"
 					component={LoginScreen} 
 				/>
+
 				<Stack.Screen
 					name="Home"
 					component={HomeScreen}
+				/>
+
+				<Stack.Screen
+					name="ScheduleMatch"
+					component={ScheduleMatch}
+				/>
+
+				<Stack.Screen
+					name="DetailedMatch"
+					component={DetailedMatch}
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>

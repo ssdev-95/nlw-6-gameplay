@@ -50,20 +50,21 @@ function LoginScreen({ navigation }: any) {
 
 			>
 				<Heading
-					mx={12}
 					fontSize={38}
 					color="blue.50"
 					textAlign="center"
 				>
-					Connect and organize you play matches!
+					Connect {'\n'}
+					and organize your {'\n'}
+					play matches!
 				</Heading>
 				<Text
-					mx={12}
 					color="blue.50"
 					fontSize={16}
 					textAlign="center"
 				>
-					Create groups and join with you friend to play your favorite games.
+					Create groups and join with you friend to play {'\n'}
+					your favorite games.
 				</Text>
 				<Button
 					colorScheme="red"

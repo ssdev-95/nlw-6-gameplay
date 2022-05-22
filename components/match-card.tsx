@@ -1,13 +1,14 @@
 import React from "react";
 
 import {
-	Box,
+	Button,
 	Text,
 	Icon,
 	Image,
 	Center,
 	HStack,
-	VStack
+	VStack,
+	ButtonProps
 } from "native-base";
 
 import {
@@ -28,90 +29,117 @@ created_by: string;
 }*/
 
 
-type MatchCardProps = {
+type MatchCardProps = ButtonProps & {
 	match: {
 		item: IMatch
 	}
 }
 
-export function MatchCard({ match }: MatchCardProps) {
+export function MatchCard({
+	match, ...rest
+}: MatchCardProps) {
 	return (
-		<Box
+		<Button
+			bg="transparent"
+			_pressed={{
+				bg: "transparent",
+				borderWidth: 1,
+				borderColor: "darkBlue.500"
+			}}
 			width="full"
-			height={32}
-			m={2}
+			height={24}
+			my={2}
 			borderRadius={8}
 			px={6}
+			{...rest}
 		>
-			<Center h="full" w="full">
-				<HStack space={4}>
-					{ match.item.squad.badge ? (
+			<HStack
+				height="full"
+				width="full"
+				space={1}
+			>
+				{match.item.squad.badge ? (
 					<Image
-						source={{uri:match.item.squad.badge}}
-						size={12}
-						alt={`${match.item.id} icon`}
+					  source={{uri:match.item.squad.badge}}
+						size={16}
+						borderRadius={8}
+						mx={2}
+						my="auto"
+						alt={match.item.id}
 					/>
-					) : (
+				) : (
+					<Icon
+						as={MaterialCommunityIcons}
+						name="lock"
+						color="red.700"
+						size={16}
+						mx={2}
+						my="auto"
+					/>
+				)}
+				<VStack
+					height="full"
+					width="90%"
+					justifyContent="space-evenly"
+				>
+					<HStack
+						width="full"
+						alignItems="center"
+					>
+						<Text
+							color="blue.50"
+							fontSize={24}
+						>
+							{match.item.squad.name}
+						</Text>
+						<Text
+							color="blue.200"
+							ml="14%"
+						>
+							{match.item.category}
+						</Text>
+					</HStack>
+
+					<Text color="blue.200">
+						{match.item.subject}
+					</Text>
+
+					<HStack
+						width="full"
+						alignItems="center"
+					>
+						<HStack space={2}>
 						<Icon
 							as={MaterialCommunityIcons}
-							name="lock-question"
-							size={16}
-							color="red.500"
+							name="calendar-blank"
+							color="red.700"
+							size={5}
 						/>
-					)}
-					<VStack space={2} flex={1}>
-						<HStack w="full" alignItems="center">
-							<Text
-								color="blue.50"
-								fontSize={18}
-							>
-								{match.item.squad.name}
-							</Text>
-							<Text color="blue.200" ml="auto">
-								{match.item.category}
-							</Text>
-					  </HStack>
-
-						<Text color="blue.200">
-							{match.item.subject}
+						<Text color="blue.50">
+							{match.item.date}
 						</Text>
-
-						<HStack
-							w="full"
-							height={8}
-							alignItems="center"
-						>
-							<Text
-								color="blue.50"
-								fontSize={16}
-							>
-								<Icon
-									as={MaterialCommunityIcons}
-									name="calendar-blank"
-									size={4}
-									ml={8}
-									color="red.500"
-								/>
-								{match.item.date}
-							</Text>
-							<Text
-								ml="auto"
-								color="blue.50"
-								fontSize={16}
-							>
-								<Icon
-									as={MaterialCommunityIcons}
-									name="account"
-									size={4}
-									ml={8}
-									color="red.500"
-								/>
-								{match.item.players_count}
-							</Text>
 						</HStack>
-					</VStack>
-				</HStack>
-			</Center>
-		</Box>
+						<HStack
+							ml="20%"
+							alignItems="center"
+							space={2}
+						>
+						<Icon
+							as={MaterialCommunityIcons}
+							name="account"
+							color="red.700"
+							size={5}
+					  />
+						<Text
+							color="blue.50"
+							fontSize={16}
+						>
+							{match.item.players_count}
+						</Text>
+						</HStack>
+					</HStack>
+				</VStack>
+			</HStack>
+		</Button>
 	);
 }

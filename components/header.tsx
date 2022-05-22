@@ -17,7 +17,11 @@ import {
 
 import { useAuth } from "../hooks/useAuth";
 
-export function Header() {
+type HeaderProps = {
+	action: ()=>void;
+}
+
+export function Header({ action }: HeaderProps) {
 	const { signOut, user } = useAuth()
 
 	return (
@@ -54,6 +58,7 @@ export function Header() {
 					bg="red.500"
 					p={3}
 					borderRadius={8}
+					onPress={action}
 				>
 					<Icon
 						as={MaterialCommunityIcons}

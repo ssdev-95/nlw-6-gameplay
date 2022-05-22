@@ -33,9 +33,15 @@ function HomeScreen({ navigation }: any) {
 			height="full"
 			bg="gameplay.background"
 		>
-			<Header />
+			<Header action={() => {
+				navigation.navigate('ScheduleMatch')
+			}} />
 			<Categories />
-			<Matches />
+			<Matches
+				redirect={(screen:string) => {
+					navigation.navigate(screen)
+				}}
+			/>
 		</VStack>
 	)
 }

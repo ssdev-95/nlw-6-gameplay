@@ -14,6 +14,10 @@ import { MatchCard } from "./match-card";
 import { useMatch } from "../hooks/useMatch";
 import { IMatch } from "../custom-types.d";
 
+type MatchesProps = {
+	redirect: (screen:string)=>void;
+}
+
 /*type IMatch = {
 	id: string;
 	name: string;
@@ -48,14 +52,22 @@ const matches = [
 	}
 ]*/
 
-const extractKey = (match: IMatch) => match.id
+export function Matches({ redirect }: MatchesProps) {
+	const { matches, selectMatch } = useMatch()
 
-const renderMatch = (match: IMatch) => (
-	<MatchCard match={match} />
-)
+	function handleRedirect(id:string) {
+		selectMatch(id ?? "None selected")
+		redirect("DetailedMatch")
+	}
 
-export function Matches() {
-	const { matches } = useMatch()
+	const extractKey = (match: IMatch) => match.id
+
+	const renderMatch = (match: IMatch) => (
+		<MatchCard
+			match={match}
+			onPress={()=>handleRedirect(match.item.id)}
+		/>
+	)
 
 	return (
 		<VStack
