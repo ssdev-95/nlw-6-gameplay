@@ -4,7 +4,6 @@ import {
 	Button,
 	Text,
 	Icon,
-	Image,
 	Center,
 	HStack,
 	VStack,
@@ -15,6 +14,7 @@ import {
 	MaterialCommunityIcons
 } from "@expo/vector-icons";
 
+import { GuildBadge } from "./guild-badge";
 import { IMatch } from "../custom-types.d";
 
 
@@ -56,25 +56,7 @@ export function MatchCard({
 				width="full"
 				space={1}
 			>
-				{match.squad.badge ? (
-					<Image
-					  source={{uri:match.squad.badge}}
-						size={16}
-						borderRadius={8}
-						mx={2}
-						my="auto"
-						alt={match.id}
-					/>
-				) : (
-					<Icon
-						as={MaterialCommunityIcons}
-						name="lock"
-						color="red.700"
-						size={16}
-						mx={2}
-						my="auto"
-					/>
-				)}
+				<GuildBadge guild={match.guild} />
 				<VStack
 					height="full"
 					width="90%"
@@ -88,7 +70,7 @@ export function MatchCard({
 							color="blue.50"
 							fontSize={24}
 						>
-							{match.squad.name}
+							{match.guild.name}
 						</Text>
 						<Text
 							color="gray.400"
@@ -132,7 +114,7 @@ export function MatchCard({
 							color="blue.50"
 							fontSize={16}
 						>
-							{match.players_count}
+							{match.guild.players.length}
 						</Text>
 						</HStack>
 					</HStack>

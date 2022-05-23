@@ -5,7 +5,9 @@ import {
 	Text,
 	Icon,
 	HStack,
-	Button
+	VStack,
+	Button,
+	Heading
 } from "native-base";
 
 import {
@@ -13,9 +15,12 @@ import {
 	FontAwesome
 } from "@expo/vector-icons";
 
+import { GuildBadge } from "./guild-badge";
+import { IGuild } from "../custom-types.d";
+
 type Props = TouchableOpacityProps & {
 	title:string;
-	guild?: any;
+	guild?: IGuild;
 }
 
 export function SelectGuild({
@@ -42,25 +47,40 @@ export function SelectGuild({
 				alignItems="center"
 				width="full"
 				justifyContent="space-between"
-				space={4}
+				space={6}
 			>
-				<Icon
-					as={FontAwesome}
-					name="group"
-					color="blue.200"
-					bg="darkBlue.700"
-					borderColor="darkBlue.400"
-					borderWidth={1}
-					borderRadius={8}
-					size={16}
-					p={1}
-				/>
-				<Text
-					color="blue.50"
-					fontWeight={600}
-					fontSize="md"
-					width="55%"
-				>{title}</Text>
+				<GuildBadge guild={guild} /> 
+				{ Object.entries(guild).length ? (
+					<VStack
+						width="55%"
+						space={2}
+					>
+						<Heading
+							color="blue.50"
+							fontWeight={600}
+							fontSize="md"         
+						>
+							{guild.name}
+						</Heading>
+
+						<Text
+							color="gray.400"
+							fontWeight={500}
+							fontSize="sm"
+						>
+							{guild.game}
+						</Text>
+					</VStack>
+				) : (
+					<Text
+						color="blue.50"
+						fontWeight={600}
+						fontSize="md"
+						width="55%"
+					>
+						{title}
+					</Text>
+				)}
 				<Icon
 					as={Feather}
 					name="chevron-right"

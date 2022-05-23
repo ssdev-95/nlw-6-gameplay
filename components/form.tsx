@@ -20,18 +20,24 @@ import {
 import { SmInput } from "./small-input";
 import { SelectGuild } from "./select-guild";
 
+import { IGuild } from "../custom-types.d";
+
 type FormProps = {
 	onChange?: (event:ChangeEvent)=>void;
 	onSubmit?: (event:any)=>void;
+	onOpen: ()=>void;
 	value?: any;
+	guild: IGuild;
 }
 
 export function Form({
-	onChange, onSubmit, value
+	onChange, onSubmit, value, onOpen, guild
 }: FormProps) {
+
 	function submit() {
-		alert("lol")
+		console.log(guild)
 	}
+
 	return (
 		<VStack
 			width="full"
@@ -39,11 +45,12 @@ export function Form({
 			pb={6}
 			px={2}
 			height="full"
-			space={12}
+			space={10}
 		>
 			<SelectGuild
 				title="Select a guild. :D"
-				onPress={()=>alert("Opened the modal")}
+				guild={guild}
+				onPress={onOpen}
 			/>
 
 			<HStack
@@ -101,10 +108,11 @@ export function Form({
 					onChangeText={onChange}
 					defaultValue={value}
 					maxLength={100}
-					maxRow={5}
+					maxRow={7}
 					borderColor="darkBlue.700"
 					bg="darkBlue.700"
 					color="blue.50"
+					multiline
 					_focus={{
 						borderColor:"darkBlue.500",
 						opacity: 0.8

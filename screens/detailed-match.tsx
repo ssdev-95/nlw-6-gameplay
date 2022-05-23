@@ -49,7 +49,7 @@ const extractKey = (player:PlayerType) => player.id;
 function DetailedMatch({ navigation }:any) {
 	const { matches, matchId } = useMatch()
 
-	const { squad, ...match } = useMemo(()=>{
+	const { guild, ...match } = useMemo(()=>{
 		return matches.find(item => item.id === matchId)
 	},[matchId])
 
@@ -60,7 +60,7 @@ function DetailedMatch({ navigation }:any) {
 			py={10}
 		>
 			<Header
-				title={squad.name}
+				title={guild.name}
 				goBack={()=>navigation.goBack()}
 				action={
 					<IconButton
@@ -147,7 +147,7 @@ function DetailedMatch({ navigation }:any) {
 					color="gray.400"
 					fontSize={16}
 				>
-					Total {squad.players.length}
+					Total {guild.players.length}
 				</Text>
 			</HStack>
 
@@ -166,7 +166,7 @@ function DetailedMatch({ navigation }:any) {
 							borderRadius={10}
 						/>
 					)}
-					data={squad.players}
+					data={guild.players}
 					renderItem={renderPlayers}
 					keyExtractor={extractKey}
 				/>

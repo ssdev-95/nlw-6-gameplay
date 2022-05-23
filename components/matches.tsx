@@ -18,40 +18,6 @@ type MatchesProps = {
 	redirect: (screen:string)=>void;
 }
 
-/*type IMatch = {
-	id: string;
-	name: string;
-	icon: string;
-	date: string;
-}
-
-const matches = [ 
-	{
-		name:"Duel",
-		id:"duel",
-		icon:"https://raw.githubusercontent.com/xSallus/nlw-6-gameplay/main/assets/duel.png",
-		date: "21/05/2022"
-	},
-	{
-		name:"Fun",
-		id:"fun",
-		icon:"https://raw.githubusercontent.com/xSallus/nlw-6-gameplay/main/assets/fun.png",
-		date: "21/05/2022"
-	},
-	{
-		name:"Ranked",
-		id:"ranked",
-		icon:"https://raw.githubusercontent.com/xSallus/nlw-6-gameplay/main/assets/ranked.png",
-		date: "21/05/2022"
-	},
-	{
-		name:"Console",
-		id:"console",
-		icon:"https://raw.githubusercontent.com/xSallus/nlw-6-gameplay/main/assets/console.png",
-		date: "21/05/2022"
-	}
-]*/
-
 export function Matches({ redirect }: MatchesProps) {
 	const { matches, selectMatch } = useMatch()
 
@@ -62,10 +28,10 @@ export function Matches({ redirect }: MatchesProps) {
 
 	const extractKey = (match: IMatch) => match.id
 
-	const renderMatch = (match: IMatch) => (
+	const renderMatch = ({ item }: IMatch) => (
 		<MatchCard
-			match={match.item}
-			onPress={()=>handleRedirect(match.item.id)}
+			match={item}
+			onPress={()=>handleRedirect(item.id)}
 		/>
 	)
 

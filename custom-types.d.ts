@@ -1,15 +1,16 @@
-interface ISquad {
+export interface IGuild {
+	id?: string;
 	name: string;
 	badge: string;
-	players: IUser[];
+	game?: string;
+	players?: IUser[];
 }
 
 export interface IMatch {
 	id: string;
 	subject: string;
 	category: "fun" | "duel" | "ranked" |"console";
-	squad: ISquad;
-	players_count: number!
+	guild: IGuild;
 	date: string;
 	created_by: string;
 }

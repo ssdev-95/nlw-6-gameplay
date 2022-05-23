@@ -4,7 +4,7 @@
 	"name": "🔥 Bora queimar tudo 🔥",
 	"subject": "Apex Legends",
 	"category": "ranked",
-	"squad":{
+	"guild":{
 		"name": "Legends of tomorrow",
 		"badge": "https://github.com/rocketseat-education.png",
 		"players": [
@@ -40,8 +40,45 @@
 				"available": false
 			}
 		]},
-		"players_count": 6,
 		"date": "Fri, August 25 2022 - 19:45",
 		"created_by": "28shsnewkaKwkwUYW2AU-71188"
+	}
+],
+"guilds": [
+	{
+		"id":"18sxnaTaoqo-2uejIHjw1n",
+		"name":"Honorables",
+		"badge":"https://seeklogo.com/images/V/valorant-logo-FAB2CA0E55-seeklogo.com.png",
+		"game":"Valorant"
+	},
+	{
+		"id":"jaendidjwjwnwnsUavahq2",
+		"name":"Legendarie",
+		"badge":"https://www.pentagram.com/work/league-of-legends#31463",
+		"game":"League of Legends"
+	},
+	{
+		"id":"kw38d7Ybjwf-882H23rj28",
+		"name":"Ratas de M**",
+		"badge":"https://www.readytocut.com/community/attachments/dota2-jpg.2951/?d=1430755529",
+		"game":"Dota 2"
+	},
+	{
+		"id":"n2diush2n2-iaBbxheueuhe",
+		"name":"Lords of None",
+		"badge":"https://upload.wikimedia.org/wikipedia/pt/thumb/9/9d/Sea_of_thieves_box.jpg/270px-Sea_of_thieves_box.jpg",
+		"game":"Sea of thieves"
+	},
+	{
+		"id":"widjxnsqoHH-M3o29dnsJjjj",
+		"name":"Once upon a ranked",
+		"badge":"https://www.chromegeek.com/wp-content/uploads/2020/02/Mobile-Legends-Bang-Bang-Official-Logo.jpg",
+		"game":"Mobile Legends"
+	},
+	{
+		"id":"widlkq29aHg-M3o8xuhdnskk",
+		"name":"How to loose friends",
+		"badge":"https://d1nxzqpcg2bym0.cloudfront.net/google_play/com.funboardgames.unoonline/e7fc9956-b8fb-11e8-9bad-1925ba4775c3/128x128",
+		"game":"Uno Friends"
 	}
 ]}
