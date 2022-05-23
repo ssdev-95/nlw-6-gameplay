@@ -6,11 +6,9 @@ import React, {
 import {
 	Icon,
 	Text,
-	Input,
 	Button,
 	VStack,
 	HStack,
-	Select,
 	TextArea,
 	FormControl
 } from "native-base";
@@ -18,6 +16,9 @@ import {
 import {
 	MaterialCommunityIcons
 } from "@expo/vector-icons";
+
+import { SmInput } from "./small-input";
+import { SelectGuild } from "./select-guild";
 
 type FormProps = {
 	onChange?: (event:ChangeEvent)=>void;
@@ -38,31 +39,15 @@ export function Form({
 			pb={6}
 			px={2}
 			height="full"
-			space={4}
+			space={12}
 		>
-			<Select
-				bg="transparent"
-				defaultValue="choose"
-				color="blue.50"
-			>
-				<Select.Item
-					isDisabled
-					label="Squads"
-					value="choose"
-				/>
-				<Select.Item
-					value="valorant"
-					label={<Icon
-						as={MaterialCommunityIcons}
-						name="lock"
-						size={12}
-						color="red.700"
-					/>}
-				/>
-			</Select>
+			<SelectGuild
+				title="Select a guild. :D"
+				onPress={()=>alert("Opened the modal")}
+			/>
 
 			<HStack
-				width="75%"
+				width={225}
 				space={2}
 			>
 				<FormControl width="full">
@@ -70,9 +55,15 @@ export function Form({
 						Day and month
 					</FormControl.Label>
 					<HStack width={30} alignItems="center">
-						<Input type="number" min={1} max={31} />
-						<Text color="blue.200" mx={3}>{"/"}</Text>
-						<Input type="number" min={1} max={12} />
+						<SmInput />
+						<Text
+							color="blue.200"
+							fontSize="xl"
+							mx={1}
+						>
+							{"/"}
+						</Text>
+						<SmInput />
 					</HStack>
 				</FormControl>
 				<FormControl width="full">
@@ -80,9 +71,15 @@ export function Form({
 						Time
 					</FormControl.Label>
 					<HStack width={30} alignItems="center">
-						<Input type="number" min={0} max={23} />
-						<Text color="blue.200" mx={3}>{":"}</Text>
-						<Input type="number" min={0} max={59} />
+						<SmInput />
+						<Text
+							color="blue.200"
+							mx={1}
+							fontSize="xl"
+						>
+							{":"}
+						</Text>
+						<SmInput />
 					</HStack>
 				</FormControl>
 			</HStack>
@@ -96,20 +93,30 @@ export function Form({
 						Decription
 					</FormControl.Label>
 
-					<FormControl.Label color="gray.400" ml="auto">
+					<Text color="gray.400" ml="auto">
 						Max 100 characters
-					</FormControl.Label>
+					</Text>
 				</HStack>
 				<TextArea
 					onChangeText={onChange}
 					defaultValue={value}
-					max={100}
+					maxLength={100}
+					maxRow={5}
+					borderColor="darkBlue.700"
+					bg="darkBlue.700"
+					color="blue.50"
+					_focus={{
+						borderColor:"darkBlue.500",
+						opacity: 0.8
+					}}
 				/>
 			</FormControl>
 			<Button
 				colorScheme="red"
 				borderRadius={8}
-				width={250}
+				height={12}
+				width="full"
+				fontSize="xl"
 				mx="auto"
 				onPress={submit}
 			>

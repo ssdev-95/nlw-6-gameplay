@@ -32,15 +32,16 @@ export function CategoryCard({
 			width={32}
 			height={32}
 			position="relative"
-			bg={
-				selected === category.name ?
-				"darkBlue.500" :
-				"darkBlue.700"
-			}
+			bg="darkBlue.500"
 			borderColor="darkBlue.500"
 			borderWidth={1}
 			mx={2}
 			borderRadius={8}
+			opacity={
+				selected === category.name ?
+				1 :
+				0.48
+			}
 			_pressed={{
 				opacity: 0.48,
 				bg: (
@@ -61,7 +62,7 @@ export function CategoryCard({
 						bg={
 							selected === category.name ?
 							"red.700" :
-							"gray.600"
+							"blue.50"
 						}
 						borderRadius={12}
 					/>

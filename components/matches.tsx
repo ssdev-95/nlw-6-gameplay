@@ -102,6 +102,7 @@ export function Matches({ redirect }: MatchesProps) {
 				)}
 				data={matches}
 				renderItem={renderMatch}
+				showsVerticalScrollIndicator={false}
 				keyExtractor={extractKey}
 			/>
 		</VStack>

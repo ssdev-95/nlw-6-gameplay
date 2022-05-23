@@ -73,6 +73,7 @@ export function Categories({ type }) {
 					horizontal
 					data={categories}
 					renderItem={renderCategory}
+					showsHorizontalScrollIndicator={false}
 					keyExtractor={extractKey}
 				/>
 			</HStack>

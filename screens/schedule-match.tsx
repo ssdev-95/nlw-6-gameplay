@@ -3,7 +3,8 @@ import {
 	Icon,
 	Text,
 	Button,
-	VStack
+	ScrollView,
+	KeyboardAvoidingView
 } from "native-base";
 
 import {
@@ -18,23 +19,29 @@ import { Form } from "../components/form";
 
 function ScheduleMatch({ navigation }:any) {
 	return (
-		<VStack
-			height="full"
-			bg="gameplay.background"
-			py={10}
-			px={2}
+		<KeyboardAvoidingView
+				_android={{ behavior: "height" }}
+				_ios={{ behavior: "padding" }}
+				height="full"
+				bg="gameplay.background"
+				py={10}
+				px={2}
 		>
-			<Header
-				title="Schedule"
-				goBack={()=>navigation.goBack()}
-			/>
-
-			<Categories
-				type="schedule"
-			/>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+			>
+				<Header
+					title="Schedule"
+					goBack={()=>navigation.goBack()}
+				/>
 	
-			<Form />
-		</VStack>
+				<Categories
+					type="schedule"
+				/>
+		
+				<Form />
+			</ScrollView>
+		</KeyboardAvoidingView>
 	)
 }
 
