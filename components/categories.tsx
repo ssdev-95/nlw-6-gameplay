@@ -5,6 +5,7 @@ import {
 	Text,
 	Image,
 	HStack,
+	VStack,
 	FlatList,
 } from "native-base";
 
@@ -55,15 +56,26 @@ export function Categories({ type }) {
 	)
 
 	return (
-		<HStack width="full" my={8} py={2} >
-			<FlatList
-				width="full"
-				height={32}
-				horizontal
-				data={categories}
-				renderItem={renderCategory}
-				keyExtractor={extractKey}
-			/>
-		</HStack>
+		<VStack width="full" my={8} py={2} >
+			{type === "schedule" && (
+				<Text
+					color="blue.300"
+					fontSize="xl"
+					ml={3}
+				>
+					Categories
+				</Text>
+			)}
+			<HStack width="full" my={2} py={1} >
+				<FlatList
+					width="full"
+					height={32}
+					horizontal
+					data={categories}
+					renderItem={renderCategory}
+					keyExtractor={extractKey}
+				/>
+			</HStack>
+		</VStack>
 	)
 }

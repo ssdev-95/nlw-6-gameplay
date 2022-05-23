@@ -1,6 +1,7 @@
 import {
 	Box,
 	Icon,
+	Text,
 	Button,
 	VStack
 } from "native-base";
@@ -13,9 +14,7 @@ import {
 	Categories
 } from "../components/categories"
 
-/*import {
-	MaterialCommunityIcons
-} from '@expo/vector-icons';*/
+import { Form } from "../components/form";
 
 function ScheduleMatch({ navigation }:any) {
 	return (
@@ -23,14 +22,18 @@ function ScheduleMatch({ navigation }:any) {
 			height="full"
 			bg="gameplay.background"
 			py={10}
+			px={2}
 		>
 			<Header
 				title="Schedule"
 				goBack={()=>navigation.goBack()}
 			/>
+
 			<Categories
 				type="schedule"
 			/>
+	
+			<Form />
 		</VStack>
 	)
 }
