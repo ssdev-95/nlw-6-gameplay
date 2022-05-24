@@ -23,8 +23,8 @@ import { SelectGuild } from "./select-guild";
 import { IGuild } from "../custom-types.d";
 
 type FormProps = {
-	onChange?: (event:ChangeEvent)=>void;
-	onSubmit?: (event:any)=>void;
+	onChange?: (key: string, value:string)=>void;
+	onSubmit?: ()=>void;
 	onOpen: ()=>void;
 	value?: any;
 	guild: IGuild;
@@ -33,10 +33,6 @@ type FormProps = {
 export function Form({
 	onChange, onSubmit, value, onOpen, guild
 }: FormProps) {
-
-	function submit() {
-		console.log(guild)
-	}
 
 	return (
 		<VStack
@@ -62,7 +58,11 @@ export function Form({
 						Day and month
 					</FormControl.Label>
 					<HStack width={30} alignItems="center">
-						<SmInput />
+						<SmInput
+							onChangeText={
+								text => onChange("day", text)
+							}
+						/>
 						<Text
 							color="blue.200"
 							fontSize="xl"
@@ -70,7 +70,11 @@ export function Form({
 						>
 							{"/"}
 						</Text>
-						<SmInput />
+						<SmInput
+							onChangeText={
+								text => onChange("month", text)
+							}
+						/>
 					</HStack>
 				</FormControl>
 				<FormControl width="full">
@@ -78,7 +82,11 @@ export function Form({
 						Time
 					</FormControl.Label>
 					<HStack width={30} alignItems="center">
-						<SmInput />
+						<SmInput
+							onChangeText={
+								text => onChange("hour", text)
+							}
+						/>
 						<Text
 							color="blue.200"
 							mx={1}
@@ -86,7 +94,11 @@ export function Form({
 						>
 							{":"}
 						</Text>
-						<SmInput />
+						<SmInput
+							onChangeText={
+								text => onChange("minute", text)
+							}
+						/>
 					</HStack>
 				</FormControl>
 			</HStack>
@@ -105,7 +117,9 @@ export function Form({
 					</Text>
 				</HStack>
 				<TextArea
-					onChangeText={onChange}
+					onChangeText={
+						text => onChange("description", text)
+					}
 					defaultValue={value}
 					maxLength={100}
 					maxRow={7}
@@ -126,7 +140,7 @@ export function Form({
 				width="full"
 				fontSize="xl"
 				mx="auto"
-				onPress={submit}
+				onPress={onSubmit}
 			>
 				SCHEDULE
 			</Button>

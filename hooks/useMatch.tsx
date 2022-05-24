@@ -13,7 +13,7 @@ import { IMatch } from "../custom-types.d";
 
 type MatchContextData = {
 	matches: IMatch[];
-	scheduleMatch: (match:IMatch) => void;
+	scheduleMatch: (match:IMatch) => Promise<void>;
 	retrieveMatches: () => Promise<void>;
 	selectCategory: (option:string) => void;
 	selectMatch: (id:string) => void;
@@ -38,11 +38,11 @@ export function MatchProvider({
 	const [matchId, setMatchId] = useState("")
 	const key = "@gameplay::matches";
 
-	function scheduleMatch(match:IMatch) {
+	async function scheduleMatch(match:IMatch) {
 		const updated = [...matches, match]
 
-		setMatches(upated)
-		storeData(key,JSON.stringify(updated))
+		//setMatches(upated)
+		await storeData(key,JSON.stringify(updated))
 	}
 
 	function selectCategory(option:string) {

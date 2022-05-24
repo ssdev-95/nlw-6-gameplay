@@ -6,6 +6,8 @@ import React, {
 	ReactNode,
 } from "react";
 
+import { Alert } from "react-native";
+
 import * as AuthSession from 'expo-auth-session';
 
 import {
@@ -18,15 +20,16 @@ import { useMatch } from "./useMatch";
 import { api } from "../services/api";
 import { IUser } from "../custom-types.d";
 
-const {
+import {
 	REDIRECT_URI,
 	SCOPE,
 	RESPONSE_TYPE,
 	CLIENT_ID,
-	CDN_IMAGE
-} = process.env;
+	CDN_IMAGE,
+	BASE_URL
+} from "@env";
 
-type AuthorizationResponse = AuthSession.AuthSessionResult & {
+type AuthResponse = AuthSession.AuthSessionResult & {
   params: {
     access_token?: string;
     error?: string;
@@ -39,11 +42,11 @@ type ProviderProps = {
 
 type AuthData = {
 	user: IUser;
-	signIn: ()=>Promise<voi>;
-	signOut: ()=>Promise<voi>;
+	signIn: ()=>Promise<void>;
+	signOut: ()=>Promise<void>;
 }
 
-const authUrl = `${api.defaults.baseURL}/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
+const authUrl = `${BASE_URL}/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
 
 const authKey = "@gameplay::user";
 
@@ -56,11 +59,10 @@ export function AuthProvider({
 	const { key: matchKey } = useMatch()
 
 	const signIn = async () => {
-		/*let error:any
 		try {
 			const { type, params } = await AuthSession
         .startAsync({ authUrl })
-				.catch(err => console.error(err)) as AuthorizationResponse;
+				.catch(err => console.error(err)) as AuthResponse;
 			if (type !== "success" && params.error) {
 				throw new Error(params.error)
 			}
@@ -76,30 +78,21 @@ export function AuthProvider({
         ...userInfo.data,
         name: firstName,
         token: params.access_token,
-				bio: userInfo.data.bio ?? 'Another otaku fdp.'
+				bio: userInfo.data.bio ?? 'Another otaku fdp.',
+				available: false
       }
 
-      //await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
-      setUser(userData);
+      await storeData(
+				authKey,
+				JSON.stringify(userData)
+			).catch(err=>console.error(err))
 
-		} catch {
-			throw new Error(error)
-		} finally {
+      setUser(userData);
+		} catch(err) {
+			console.error(err)
+		} /*finally {
 			console.log(user)
 		}*/
-
-		const response = {
-			id: '28shsnewkaKwkwUYW2AU-71188',
-			name: 'Sarô Senpai',
-			avatar: 'https://github.com/xSallus.png',
-			bio: 'Another otaku fdp.'
-		}
-
-		setUser(response)
-		await storeData(
-			authKey,
-			JSON.stringify(response)
-		).catch(err=>console.error(err))
 	}
 
 	const signOut = async signOut => {

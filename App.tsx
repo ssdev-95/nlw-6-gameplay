@@ -1,4 +1,5 @@
 import React from "react";
+import { LogBox } from "react-native";
 import StackNavigator from "./screens/navigator";
 import { StatusBar } from "expo-status-bar";
 import {
@@ -14,6 +15,10 @@ const theme = extendTheme({
 		}
 	}
 })
+
+LogBox.ignoreLogs([
+	"You are not currently signed in to Expo on your development machine."
+])
 
 function App() {
   return (
