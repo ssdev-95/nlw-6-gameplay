@@ -60,7 +60,7 @@ function DetailedMatch({ navigation }:any) {
 			py={10}
 		>
 			<Header
-				title={guild.name}
+				title="Match"
 				goBack={()=>navigation.goBack()}
 				action={
 					<IconButton
@@ -99,11 +99,11 @@ function DetailedMatch({ navigation }:any) {
 					  lineHeight={32}
 						mb={4}
 					>
-						{match.subject}
+						{guild.name}
 					</Heading>
 
 					<Text
-						fontSize={18}
+						fontSize={16}
 						fontWeight={400}
 						color="blue.200"
 					>
@@ -125,6 +125,22 @@ function DetailedMatch({ navigation }:any) {
 							fontSize={16}
 						>
 							{match.date}
+						</Text>
+
+						<Text
+							fontSize={16}
+							color="gray.500"
+							fontWeight={400}
+						>
+							{" - "}
+						</Text>
+						
+						<Text
+							fontSize={16}
+							fontWeight={400}
+							color="gray.500"                            
+						>
+							{guild.owner ? "Ademiro" : "Guest"}
 						</Text>
 					</HStack>
 				</VStack>

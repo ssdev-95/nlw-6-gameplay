@@ -1,14 +1,14 @@
 export interface IGuild {
 	id?: string;
 	name: string;
-	badge: string;
-	game?: string;
+	icon: string;
+	owner?: boolean;
 	players?: IUser[];
 }
 
 export interface IMatch {
 	id: string;
-	subject: string;
+	subject?: string;
 	category: "fun" | "duel" | "ranked" |"console";
 	guild: IGuild;
 	date: string;

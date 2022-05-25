@@ -18,7 +18,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useMatch } from "../hooks/useMatch";
 
 function HomeScreen({ navigation }: any) {
-	const { user } = useAuth()
+	const { user, guilds } = useAuth()
 	const { retrieveMatches } = useMatch()
 
 	function goBack() {

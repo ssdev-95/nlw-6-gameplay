@@ -8,8 +8,9 @@ import  {
 } from "native-base";
 
 import { GuildCard } from "./guild-card";
+import { useAuth } from "../hooks/useAuth";
 import { IGuild } from "../custom-types.d";
-import { guilds } from "../mock.json";
+//import { guilds } from "../mock.json";
 
 type Props = {
 	isOpen: boolean;
@@ -21,6 +22,8 @@ interface RenderProps {
 }
 
 export function GuildsModal({ onClose, isOpen }:Props) {
+	const { guilds } = useAuth()
+
 	const extractKey = (guild:IGuild) => guild.id;
 	const renderGuild = ({ item }:RenderProps) => (
 		<GuildCard

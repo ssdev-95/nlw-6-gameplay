@@ -81,7 +81,7 @@ export function MatchCard({
 					</HStack>
 
 					<Text color="gray.400">
-						{match.subject}
+						{match.guild.owner ? "Ademiro" : "Guest"}
 					</Text>
 
 					<HStack

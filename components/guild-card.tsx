@@ -40,7 +40,7 @@ export function GuildCard({ guild, ...rest }:Props) {
 						{guild.name}
 					</Text>
 					<Text color="gray.400">
-						{guild.game}
+						{guild.owner ? "Ademiro" : "Guest"}
 					</Text>
 				</VStack>
 				<Icon

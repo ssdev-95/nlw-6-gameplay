@@ -68,7 +68,7 @@ export function SelectGuild({
 							fontWeight={500}
 							fontSize="sm"
 						>
-							{guild.game}
+							{guild.owner ? "Ademiro" : "Guest"}
 						</Text>
 					</VStack>
 				) : (

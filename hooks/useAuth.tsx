@@ -18,7 +18,7 @@ import {
 
 import { useMatch } from "./useMatch";
 import { api } from "../services/api";
-import { IUser } from "../custom-types.d";
+import { IUser, IGuild } from "../custom-types.d";
 
 import {
 	REDIRECT_URI,
@@ -42,6 +42,7 @@ type ProviderProps = {
 
 type AuthData = {
 	user: IUser;
+	guilds:IGuild[];
 	signIn: ()=>Promise<void>;
 	signOut: ()=>Promise<void>;
 }
@@ -56,6 +57,7 @@ export function AuthProvider({
 	children
 }: ProviderProps) {
 	const [user, setUser] = useState<IUser>({} as IUser)
+	const [guilds, setGuilds] = useState<IGuild[]>([])
 	const { key: matchKey } = useMatch()
 
 	const signIn = async () => {
@@ -71,6 +73,9 @@ export function AuthProvider({
       const userInfo = await api.get('/users/@me')
 			  .catch(err => console.error(err));
 
+			const guildsInfo  = await api.get("/users/@me/guilds")
+				.catch(err => console.error(err));
+
       const firstName = userInfo.data.username.split(' ')[0];
       userInfo.data.avatar = `${CDN_IMAGE}/avatars/${userInfo.data.id}/${userInfo.data.avatar}.png`;
 
@@ -81,6 +86,13 @@ export function AuthProvider({
 				bio: userInfo.data.bio ?? 'Another otaku fdp.',
 				available: false
       }
+
+			const guildData = guildsInfo.data.map((guild:IGuild)=>({
+				players: [ userData ],
+				...guild
+			}))
+
+			setGuilds(guildData)
 
       await storeData(
 				authKey,
@@ -115,6 +127,7 @@ export function AuthProvider({
 	return (
 		<AuthContext.Provider value={{
 			user,
+			guilds,
 			signIn,
 			signOut
 		}}>

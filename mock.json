@@ -2,11 +2,13 @@
 	{ 
 	"id": "19sdhms29jjUHqj29-82jj",
 	"name": "🔥 Bora queimar tudo 🔥",
-	"subject": "Apex Legends",
+	"subject": "League of Legends",
 	"category": "ranked",
 	"guild":{
+		"id":"jaendidjwjwnwnsUavahq2",
 		"name": "Legends of tomorrow",
-		"badge": "https://github.com/rocketseat-education.png",
+		"icon": "https://github.com/rocketseat-education.png",
+		"owner": false,
 		"players": [
 			{
 				"id": "82ejx8xJbUG282hah-882j2",

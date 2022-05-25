@@ -19,13 +19,13 @@ interface Props {
 export function GuildBadge({ guild }: Props) {
 	return (
 		<>{
-		guild.badge ? (
+		guild.icon ? (
 			<Image
 				size={16}
 				borderRadius={8}
 				borderWidth={1}
 				borderColor="darkBlue.400"
-				source={{ uri: guild.badge }}
+				source={{ uri: guild.icon }}
 				alignSelf="center"
 				alt={
 					guild.name.split(' ').join('_') ||
