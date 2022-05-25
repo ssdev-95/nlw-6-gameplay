@@ -29,3 +29,12 @@ export type ICategory = {
 	name: string;
 	icon: string;
 }
+
+export type EditingMatch = {
+	description: string;
+	day: string;
+	month: string;
+	hour: string;
+	minute: string;
+}
+

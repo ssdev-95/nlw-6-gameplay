@@ -3,6 +3,7 @@ import LoginScreen from "./login";
 import HomeScreen from "./home";
 import ScheduleMatch from "./schedule-match";
 import DetailedMatch from "./detailed-match";
+import Guilds from "./guilds";
 
 import {
 	NavigationContainer
@@ -41,6 +42,14 @@ function StackNavigator() {
 				<Stack.Screen
 					name="DetailedMatch"
 					component={DetailedMatch}
+				/>
+
+				<Stack.Screen
+					name="Guilds"
+					component={Guilds}
+					options={{
+						presentation:"transparentModal"
+					}}
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>

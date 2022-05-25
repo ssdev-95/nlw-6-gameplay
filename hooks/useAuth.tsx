@@ -25,9 +25,9 @@ import {
 	SCOPE,
 	RESPONSE_TYPE,
 	CLIENT_ID,
-	CDN_IMAGE,
-	BASE_URL
 } from "@env";
+
+const CDN_IMAGE="https://cdn.discordapp.com"
 
 type AuthResponse = AuthSession.AuthSessionResult & {
   params: {
@@ -42,14 +42,15 @@ type ProviderProps = {
 
 type AuthData = {
 	user: IUser;
-	guilds:IGuild[];
+	guildKey:string;
 	signIn: ()=>Promise<void>;
 	signOut: ()=>Promise<void>;
 }
 
-const authUrl = `${BASE_URL}/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
+const authUrl = `${api.defaults.baseURL}/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
 
 const authKey = "@gameplay::user";
+const guildKey = "@gameplay::guilds";
 
 const AuthContext = createContext({} as AuthData)
 
@@ -57,7 +58,6 @@ export function AuthProvider({
 	children
 }: ProviderProps) {
 	const [user, setUser] = useState<IUser>({} as IUser)
-	const [guilds, setGuilds] = useState<IGuild[]>([])
 	const { key: matchKey } = useMatch()
 
 	const signIn = async () => {
@@ -88,15 +88,20 @@ export function AuthProvider({
       }
 
 			const guildData = guildsInfo.data.map((guild:IGuild)=>({
+				...guild,
 				players: [ userData ],
-				...guild
+				icon: `${CDN_IMAGE}/icons/${guild.id}/${guild.icon}.png`,
 			}))
 
-			setGuilds(guildData)
 
       await storeData(
 				authKey,
 				JSON.stringify(userData)
+			).catch(err=>console.error(err))
+
+			await storeData(
+				guildKey,
+				JSON.stringify(guildData)
 			).catch(err=>console.error(err))
 
       setUser(userData);
@@ -108,10 +113,28 @@ export function AuthProvider({
 	}
 
 	const signOut = async signOut => {
-		const response = {}
-		setUser(response)
-		await eraseData([authKey, matchKey])
-			.catch(err => console.error(err))
+		const response = {
+			user:{},
+			matches:[],
+			guilds:[]
+		}
+
+		setUser(response.user)
+
+		await storeData(
+			guildKey,
+			JSON.stringify(response.guilds)
+		).catch(err=>console.error(err))
+
+		await storeData(
+			matchKey,
+			JSON.stringify(response.matches)
+		).catch(err=>console.error(err))
+
+		await storeData(
+			authKey,
+			JSON.stringify(response.user)
+		).catch(err=>console.error(err))
 	}
 
 	useEffect(()=>{
@@ -127,9 +150,9 @@ export function AuthProvider({
 	return (
 		<AuthContext.Provider value={{
 			user,
-			guilds,
 			signIn,
-			signOut
+			signOut,
+			guildKey
 		}}>
 			{ children }
 		</AuthContext.Provider>

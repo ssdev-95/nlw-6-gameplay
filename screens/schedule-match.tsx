@@ -12,6 +12,8 @@ import {
 	KeyboardAvoidingView
 } from "native-base";
 
+import { v4 as uuid } from "uuid";
+
 import {
 	Header
 } from "../components/schedule-header";
@@ -20,95 +22,77 @@ import {
 	Categories
 } from "../components/categories"
 
-import { GuildsModal } from "../components/guilds-modal";
 import { Form } from "../components/form";
 import { useMatch } from "../hooks/useMatch";
 import { useAuth } from "../hooks/useAuth";
+import { useForm } from "../hooks/useForm";
 import { IGuild } from "../custom-types.d";
 
-type EditingMatch = {
-	description: string;
-	day: string;
-	month: string;
-	hour: string;
-	minute: string;
-}
-
 function ScheduleMatch({ navigation }:any) {
-	const { selected, scheduleMatch } = useMatch()
+	const {
+		selected,
+		newMatch,
+		guild,
+		selectGuild,
+		resetFields,
+		handleChange
+	} = useForm()
+
+	const { scheduleMatch } = useMatch()
 	const { user } = useAuth()
-	const [guild, setGuild] = useState<IGuild>({} as IGuild)
-	const [match, setMatch] = useState<EditingMatch>(
-		{} as EditingMatch
-	)
-	const { isOpen, onOpen, onClose } = useDisclose()
-
-	function handleSelectGuild(gild:IGuild) {
-		setGuild(gild)
-		setTimeout(onClose, 500)
-	}
-
-	function handleChange(key:string, value:string) {
-		setMatch(prev => ({
-			...prev,
-			[key]: value
-		}))
-	}
 
 	async function handleSubmit() {
-		const { day, month, hour, minute, description } = match;
+		const {
+			day, month, hour, minute, description
+		} = newMatch;
 		const date = `${[day,month].join("/")} at ${[hour,minute].join(":")}`
-		const newMatch = {
+		const match = {
+			id: uuid(),
 			date,
 			category: selected,
-			guild: { ... guild, players: [ user ]},
+			guild,
 			created_by: user.id,
-			subject: guild.game,
+			subject: "Some.cool.game",
 			name: description
 		}
 
-		await scheduleMatch(newMatch)
+		await scheduleMatch(match)
 			.then(()=>{
 				setTimeout(()=>navigation.navigate("Home"), 1000)
 			})
 			.catch(err=>console.error(err))
+
+		resetFields();
 	}
 
 	return (
-		<>
-			<KeyboardAvoidingView
-					_android={{ behavior: "height" }}
-					_ios={{ behavior: "padding" }}
-					height="full"
-					bg="gameplay.background"
-					py={10}
-					px={2}
+		<KeyboardAvoidingView
+				_android={{ behavior: "height" }}
+				_ios={{ behavior: "padding" }}
+				height="full"
+				bg="gameplay.background"
+				py={10}
+				px={2}
+		>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
 			>
-				<ScrollView
-					showsVerticalScrollIndicator={false}
-				>
-					<Header
-						title="Schedule"
-						goBack={()=>navigation.goBack()}
-					/>
+				<Header
+					title="Schedule"
+					goBack={()=>navigation.goBack()}
+				/>
 	
-					<Categories
-						type="schedule"
-					/>
+				<Categories
+					type="schedule"
+				/>
 		
-					<Form
-						onOpen={onOpen}
-						guild={guild}
-						onChange={handleChange}
-						onSubmit={handleSubmit}
-					/>
-				</ScrollView>
-			</KeyboardAvoidingView>
-			<GuildsModal
-				isOpen={isOpen}
-				onClose={handleSelectGuild}
-			/>
-		</>
+				<Form
+					onOpen={()=>navigation.navigate("Guilds")}
+					onChange={handleChange}
+					onSubmit={handleSubmit}
+				/>
+			</ScrollView>
+		</KeyboardAvoidingView>
 	)
 }
 

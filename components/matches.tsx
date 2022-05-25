@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import {
 	Box,
@@ -12,6 +12,7 @@ import {
 
 import { MatchCard } from "./match-card";
 import { useMatch } from "../hooks/useMatch";
+import { useForm } from "../hooks/useForm";
 import { IMatch } from "../custom-types.d";
 
 type MatchesProps = {
@@ -20,11 +21,22 @@ type MatchesProps = {
 
 export function Matches({ redirect }: MatchesProps) {
 	const { matches, selectMatch } = useMatch()
+	const { selected } = useForm()
 
 	function handleRedirect(id:string) {
 		selectMatch(id ?? "None selected")
 		redirect("DetailedMatch")
 	}
+
+	const filtered = useMemo(() => {
+		if (selected === "none") {
+			return matches;
+		}
+
+		return matches.filter(
+			match => match.category === selected
+		);
+	}, [selected])
 
 	const extractKey = (match: IMatch) => match.id
 
@@ -66,7 +78,7 @@ export function Matches({ redirect }: MatchesProps) {
 						borderRadius={10}
 					/>
 				)}
-				data={matches}
+				data={filtered}
 				renderItem={renderMatch}
 				showsVerticalScrollIndicator={false}
 				keyExtractor={extractKey}

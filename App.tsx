@@ -7,6 +7,7 @@ import {
 } from "native-base";
 import { AuthProvider } from "./hooks/useAuth";
 import { MatchProvider } from "./hooks/useMatch";
+import { FormProvider } from "./hooks/useForm";
 
 const theme = extendTheme({
 	colors: {
@@ -23,12 +24,14 @@ LogBox.ignoreLogs([
 function App() {
   return (
 		<NativeBaseProvider theme={theme}>
-			<MatchProvider>
-				<AuthProvider>
-					<StackNavigator />
-					<StatusBar style="light" />
-				</AuthProvider>
-			</MatchProvider>
+			<FormProvider>
+				<MatchProvider>
+					<AuthProvider>
+						<StackNavigator />
+						<StatusBar style="light" />
+					</AuthProvider>
+				</MatchProvider>
+			</FormProvider>
 		</NativeBaseProvider>
   );
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { BASE_URL } from "@env";
 
+const BASE_URL="https://discord.com/api"
 const api = axios.create({
 	baseURL: BASE_URL
 })

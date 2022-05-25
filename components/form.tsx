@@ -1,6 +1,6 @@
 import React, {
 	ChangeEvent,
-	FormEvent
+	useMemo
 } from "react";
 
 import {
@@ -19,20 +19,27 @@ import {
 
 import { SmInput } from "./small-input";
 import { SelectGuild } from "./select-guild";
-
-import { IGuild } from "../custom-types.d";
+import { useForm } from "../hooks/useForm";
+import { IGuild, EditingMatch } from "../custom-types.d";
 
 type FormProps = {
-	onChange?: (key: string, value:string)=>void;
+	onChange?: ({key: string, value:string})=>void;
 	onSubmit?: ()=>void;
 	onOpen: ()=>void;
-	value?: any;
-	guild: IGuild;
 }
 
 export function Form({
-	onChange, onSubmit, value, onOpen, guild
+	onChange, onSubmit,	 onOpen
 }: FormProps) {
+	const { newMatch, guild, selected } = useForm()
+
+	const hasCompleted = useMemo(() => {
+		return (
+			Object.values(newMatch).every(val=>val!=="")
+			&& Object.entries(guild).length > 0
+			&& selected !== "none"
+		);
+	},[newMatch, selected, guild])
 
 	return (
 		<VStack
@@ -59,9 +66,11 @@ export function Form({
 					</FormControl.Label>
 					<HStack width={30} alignItems="center">
 						<SmInput
-							onChangeText={
-								text => onChange("day", text)
-							}
+							onChangeText={text => onChange({
+								key:"day",
+								value:text
+							})}
+							defaultValue={newMatch.day ?? ""}
 						/>
 						<Text
 							color="blue.200"
@@ -71,9 +80,11 @@ export function Form({
 							{"/"}
 						</Text>
 						<SmInput
-							onChangeText={
-								text => onChange("month", text)
-							}
+							onChangeText={text => onChange({
+								key:"month",
+								value: text
+							})}
+							defaultValue={newMatch.month ?? ""}
 						/>
 					</HStack>
 				</FormControl>
@@ -83,9 +94,11 @@ export function Form({
 					</FormControl.Label>
 					<HStack width={30} alignItems="center">
 						<SmInput
-							onChangeText={
-								text => onChange("hour", text)
-							}
+							onChangeText={text => onChange({
+								key:"hour",
+								value:text
+							})}
+							defaultValue={newMatch.hour ?? ""}
 						/>
 						<Text
 							color="blue.200"
@@ -95,9 +108,11 @@ export function Form({
 							{":"}
 						</Text>
 						<SmInput
-							onChangeText={
-								text => onChange("minute", text)
-							}
+							onChangeText={text => onChange({
+								key:"minute",
+								value:text
+							})}
+							defaultValue={newMatch.minute ?? ""}
 						/>
 					</HStack>
 				</FormControl>
@@ -117,10 +132,11 @@ export function Form({
 					</Text>
 				</HStack>
 				<TextArea
-					onChangeText={
-						text => onChange("description", text)
-					}
-					defaultValue={value}
+					onChangeText={text => onChange({
+						key:"description",
+						value:text
+					})}
+					defaultValue={newMatch.description ?? ""}
 					maxLength={100}
 					maxRow={7}
 					borderColor="darkBlue.700"
@@ -134,7 +150,16 @@ export function Form({
 				/>
 			</FormControl>
 			<Button
-				colorScheme="red"
+				background="red.700"
+				disabled={!hasCompleted}
+				_disabled={{
+					background:"green.500",
+					opacity: 0.48
+				}}
+				_pressed={{
+					background:"red.700",
+					opacity: 0.48
+				}}
 				borderRadius={8}
 				height={12}
 				width="full"

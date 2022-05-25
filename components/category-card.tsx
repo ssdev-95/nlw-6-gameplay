@@ -10,7 +10,7 @@ import {
 	Divider
 } from "native-base";
 
-import { useMatch } from "../hooks/useMatch";
+import { useForm } from "../hooks/useForm";
 import { ICategory } from "../custom-types.d";
 
 interface CategoryProps {
@@ -21,10 +21,10 @@ interface CategoryProps {
 export function CategoryCard({
 	category, type
 }: CategoryProps) {
-	const { selected, selectCategory } = useMatch()
+	const { selected, selectCategory } = useForm()
 
   function handlePress() {
-		selectCategory(category.name)
+		selectCategory(category.id)
 	}
 
 	return (
@@ -38,14 +38,14 @@ export function CategoryCard({
 			mx={2}
 			borderRadius={8}
 			opacity={
-				selected === category.name ?
+				selected === category.id ?
 				1 :
 				0.48
 			}
 			_pressed={{
 				opacity: 0.48,
 				bg: (
-					selected === category.name ?
+					selected === category.id ?
 					"darkBlue.500" :
 					"darkBlue.700"
 					)
@@ -60,7 +60,7 @@ export function CategoryCard({
 						top={-1}
 						right={-1}
 						bg={
-							selected === category.name ?
+							selected === category.id ?
 							"red.700" :
 							"blue.50"
 						}

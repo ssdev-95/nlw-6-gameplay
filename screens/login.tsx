@@ -35,10 +35,6 @@ function LoginScreen({ navigation }: any) {
 
 	useEffect(() => {
 		if(Object.entries(user).length) {
-			storeData(
-				key,
-				JSON.stringify(mockedData)
-			)
 			goHome()
 		}
 	}, [user])

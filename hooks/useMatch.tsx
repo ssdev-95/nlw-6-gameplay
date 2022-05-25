@@ -15,9 +15,7 @@ type MatchContextData = {
 	matches: IMatch[];
 	scheduleMatch: (match:IMatch) => Promise<void>;
 	retrieveMatches: () => Promise<void>;
-	selectCategory: (option:string) => void;
 	selectMatch: (id:string) => void;
-	selected: string;
 	matchId: string;
 	key:string;
 }
@@ -34,7 +32,6 @@ export function MatchProvider({
 	children
 }: ProviderProps) {
 	const [matches, setMatches] = useState<IMatch[]>([])
-	const [selected, setSelected] = useState("none")
 	const [matchId, setMatchId] = useState("")
 	const key = "@gameplay::matches";
 
@@ -43,11 +40,6 @@ export function MatchProvider({
 
 		//setMatches(upated)
 		await storeData(key,JSON.stringify(updated))
-	}
-
-	function selectCategory(option:string) {
-		const value = (selected === option) ? "none" : option
-		setSelected(value)
 	}
 
 	function selectMatch(id:string) {
@@ -68,10 +60,8 @@ export function MatchProvider({
 		<MatchContext.Provider value={{
 			matches,
 			scheduleMatch,
-			selectCategory,
 			retrieveMatches,
 			selectMatch,
-			selected,
 			matchId,
 			key
 		}}>
