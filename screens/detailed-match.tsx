@@ -107,7 +107,7 @@ function DetailedMatch({ navigation }:any) {
 						fontWeight={400}
 						color="blue.200"
 					>
-						{match.name}
+						{match.description}
 					</Text>
 
 					<HStack

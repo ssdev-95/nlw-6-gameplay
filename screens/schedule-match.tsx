@@ -45,15 +45,14 @@ function ScheduleMatch({ navigation }:any) {
 		const {
 			day, month, hour, minute, description
 		} = newMatch;
-		const date = `${[day,month].join("/")} at ${[hour,minute].join(":")}`
+		const date = `${[day,month].join("/")} at ${[hour,minute].join(":")} ${hour > 12 ? "pm" : "am"}`
 		const match = {
 			id: uuid(),
 			date,
-			category: selected,
+			description,
 			guild,
+			category: selected,
 			created_by: user.id,
-			subject: "Some.cool.game",
-			name: description
 		}
 
 		await scheduleMatch(match)

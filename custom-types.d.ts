@@ -3,12 +3,11 @@ export interface IGuild {
 	name: string;
 	icon: string;
 	owner?: boolean;
-	players?: IUser[];
 }
 
 export interface IMatch {
 	id: string;
-	subject?: string;
+	description?: string;
 	category: "fun" | "duel" | "ranked" |"console";
 	guild: IGuild;
 	date: string;

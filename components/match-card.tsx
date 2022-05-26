@@ -110,12 +110,12 @@ export function MatchCard({
 							color="red.700"
 							size={5}
 					  />
-						<Text
+						{/*<Text
 							color="blue.50"
 							fontSize={16}
 						>
 							{match.guild.players.length}
-						</Text>
+						</Text>*/}
 						</HStack>
 					</HStack>
 				</VStack>
