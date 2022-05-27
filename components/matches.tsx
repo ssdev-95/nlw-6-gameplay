@@ -11,7 +11,6 @@ import {
 } from "native-base";
 
 import { MatchCard } from "./match-card";
-import { useMatch } from "../hooks/useMatch";
 import { useForm } from "../hooks/useForm";
 import { IMatch } from "../custom-types.d";
 
@@ -20,12 +19,11 @@ type MatchesProps = {
 }
 
 export function Matches({ redirect }: MatchesProps) {
-	const { matches, selectMatch } = useMatch()
-	const { selected } = useForm()
+	const { selected, matches, selectMatch } = useForm()
 
 	function handleRedirect(id:string) {
-		selectMatch(id ?? "None selected")
-		redirect("DetailedMatch")
+		//selectMatch(id ?? "None selected")
+		redirect("DetailedMatch", id)
 	}
 
 	const filtered = useMemo(() => {

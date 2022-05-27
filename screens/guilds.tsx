@@ -13,24 +13,27 @@ import  {
 
 import { useFocusEffect } from "@react-navigation/native";
 
+import { Skeleton } from "../components/skeleton";
 import { GuildCard } from "../components/guild-card";
-import { useAuth } from "../hooks/useAuth";
 import { useForm } from "../hooks/useForm";
 import { retrieveData } from "../services/storage";
-import { IGuild } from "../custom-types.d";
+import {
+	IGuild,
+	GUILD_KEY
+} from "../custom-types.d";
 
 interface RenderProps {
 	item: IGuild;
 }
 
 function Guilds({ navigation }) {
-	const { guildKey } = useAuth()
 	const { selectGuild } = useForm()
+	const [loading, setLoading] = useState(true)
 	const [guilds, setGuilds] = useState<IGuild[]>([])
 
 	useFocusEffect(
 		useCallback(() => {
-			retrieveData(guildKey)                               
+			retrieveData(GUILD_KEY)                               
 				.then((data)=>{
 					if(data) {
 						const parsed = JSON.parse(data)
@@ -38,6 +41,8 @@ function Guilds({ navigation }) {
 					}
 				})
 				.catch(err => console.error(err))
+
+				setTimeout(()=>setLoading(false), 4000)
 		},[])
 	);
 
@@ -69,7 +74,7 @@ function Guilds({ navigation }) {
 				bg="darkBlue.600"
 				borderRadius={2}
 			/>
-
+			{ loading ? <Skeleton type="guilds" /> : (
 			<Box
 				width="full"
 				height="100%"
@@ -100,6 +105,7 @@ function Guilds({ navigation }) {
 					)}
 				/>
 			</Box>
+			)}
 		</VStack>
 	)
 }

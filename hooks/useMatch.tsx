@@ -42,10 +42,6 @@ export function MatchProvider({
 		await storeData(key,JSON.stringify(updated))
 	}
 
-	function selectMatch(id:string) {
-		setMatchId(id)
-	}
-
 	async function retrieveMatches() {
 		const stored = await retrieveData(key)
 	
@@ -61,7 +57,6 @@ export function MatchProvider({
 			matches,
 			scheduleMatch,
 			retrieveMatches,
-			selectMatch,
 			matchId,
 			key
 		}}>

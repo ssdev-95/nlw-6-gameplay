@@ -13,22 +13,22 @@ import {
 	createNativeStackNavigator
 } from "@react-navigation/native-stack";
 
+import { useAuth } from "../hooks/useAuth";
+
 
 const Stack = createNativeStackNavigator();
 const screenOptions = { headerShown: false };
 
 function StackNavigator() {
+	const { user } = useAuth()
+
 	return (
+		<>{ Object.entries(user).length ? (
 		<NavigationContainer>
 			<Stack.Navigator
-				initialRouteName="Login"
+				initialRouteName="Home"
 				screenOptions={screenOptions}
 			>
-				<Stack.Screen 
-					name="Login"
-					component={LoginScreen} 
-				/>
-
 				<Stack.Screen
 					name="Home"
 					component={HomeScreen}
@@ -52,7 +52,10 @@ function StackNavigator() {
 					}}
 				/>
 			</Stack.Navigator>
-		</NavigationContainer>
+			</NavigationContainer>
+		) : (
+			<LoginScreen />
+		)}</>
  )
 }
 

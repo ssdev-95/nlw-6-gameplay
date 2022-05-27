@@ -1,4 +1,5 @@
 import React, {
+	useState,
 	useEffect,
 	useCallback
 }from "react";
@@ -14,22 +15,13 @@ import {
 import { Header } from "../components/header";
 import { Categories } from "../components/categories";
 import { Matches } from "../components/matches";
+import { Skeleton } from "../components/skeleton";
 import { useAuth } from "../hooks/useAuth";
-import { useMatch } from "../hooks/useMatch";
+import { useForm } from "../hooks/useForm";
 
 function HomeScreen({ navigation }: any) {
-	const { user, guilds } = useAuth()
-	const { retrieveMatches } = useMatch()
-
-	function goBack() {
-		navigation.goBack()
-	}
-
-	useEffect(()=>{
-		if(!Object.entries(user).length) {
-			goBack()
-		}
-	},[user])
+	const [loading, setLoading] = useState(true)
+	const { retrieveMatches } = useForm()
 
 	useFocusEffect(
 		useCallback(() => {
@@ -37,6 +29,7 @@ function HomeScreen({ navigation }: any) {
 			const route = routes[index].name
 
 			if(route === "Home") {
+				setLoading(true)
 				retrieveMatches()
 					.catch(err => console.log(err))
 			}
@@ -44,6 +37,12 @@ function HomeScreen({ navigation }: any) {
 			return () => console.log("Home gone out of focus")
 		}, [])
 	)
+
+	useEffect(()=>{
+		if(loading) {
+			setTimeout(()=>setLoading(false), 4000)
+		}
+	}, [loading])
 
 	return (
 		<VStack
@@ -57,11 +56,15 @@ function HomeScreen({ navigation }: any) {
 				navigation.navigate('ScheduleMatch')
 			}} />
 			<Categories type="show" />
-			<Matches
-				redirect={(screen:string) => {
-					navigation.navigate(screen)
-				}}
-			/>
+			{loading ? (
+				<Skeleton />
+			) : (
+				<Matches
+					redirect={(screen:string, id:string) => {
+						navigation.navigate(screen, { matchId: id })
+					}}
+				/>
+			)}
 		</VStack>
 	)
 }

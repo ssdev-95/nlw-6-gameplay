@@ -5,7 +5,8 @@ import {
 	Text,
 	IconButton,
 	HStack,
-	Divider
+	Divider,
+	IconButtonProps
 } from "native-base";
 
 import {
@@ -14,23 +15,25 @@ import {
 
 type DiscordButtonProps = {
 	title:string;
-	onPress:()=>void;
+	onPress?: ()=>void;
+	bg?: string;
 }
 
 export function DiscordButton({
+	bg,
 	title,
 	onPress
 }: DiscordButtonProps) {
 	return (
 		<IconButton
-			bg="red.800"
+			bg={bg ? bg : "red.800"}
 			borderRadius={8}
 			width={275}
 			height={12}
 			onPress={onPress}
 			mx="auto"
 			_pressed={{
-				bg: "red.500",
+				bg: bg ? bg : "red.800",
 				opacity: 0.68
 			}}
 			icon={

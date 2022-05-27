@@ -1,8 +1,14 @@
+const BASE_KEY = "@gameplay"
+export const MATCH_KEY = `${BASE_KEY}::matches`;
+export const AUTH_KEY = `${BASE_KEY}::user`;
+export const GUILD_KEY = `${BASE_KEY}::guilds`;
+
 export interface IGuild {
 	id?: string;
 	name: string;
 	icon: string;
 	owner?: boolean;
+	members?: IUser[];
 }
 
 export interface IMatch {

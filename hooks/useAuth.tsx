@@ -11,6 +11,12 @@ import { Alert } from "react-native";
 import * as AuthSession from 'expo-auth-session';
 
 import {
+	AUTH_KEY,
+	MATCH_KEY,
+	GUILD_KEY
+} from "../custom-types.d";
+
+import {
 	storeData,
 	retrieveData,
 	eraseData
@@ -49,16 +55,12 @@ type AuthData = {
 
 const authUrl = `${api.defaults.baseURL}/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
 
-const authKey = "@gameplay::user";
-const guildKey = "@gameplay::guilds";
-
 const AuthContext = createContext({} as AuthData)
 
 export function AuthProvider({
 	children
 }: ProviderProps) {
 	const [user, setUser] = useState<IUser>({} as IUser)
-	const { key: matchKey } = useMatch()
 
 	const signIn = async () => {
 		try {
@@ -95,12 +97,12 @@ export function AuthProvider({
 
 
       await storeData(
-				authKey,
+				AUTH_KEY,
 				JSON.stringify(userData)
 			).catch(err=>console.error(err))
 
 			await storeData(
-				guildKey,
+				GUILD_KEY,
 				JSON.stringify(guildData)
 			).catch(err=>console.error(err))
 
@@ -122,23 +124,23 @@ export function AuthProvider({
 		setUser(response.user)
 
 		await storeData(
-			guildKey,
+			GUILD_KEY,
 			JSON.stringify(response.guilds)
 		).catch(err=>console.error(err))
 
 		await storeData(
-			matchKey,
+			MATCH_KEY,
 			JSON.stringify(response.matches)
 		).catch(err=>console.error(err))
 
 		await storeData(
-			authKey,
+			AUTH_KEY,
 			JSON.stringify(response.user)
 		).catch(err=>console.error(err))
 	}
 
 	useEffect(()=>{
-		retrieveData(authKey)
+		retrieveData(AUTH_KEY)
 			.then((data)=>{
 				if(data) {
 					const parsed = JSON.parse(data)
@@ -151,8 +153,7 @@ export function AuthProvider({
 		<AuthContext.Provider value={{
 			user,
 			signIn,
-			signOut,
-			guildKey
+			signOut
 		}}>
 			{ children }
 		</AuthContext.Provider>

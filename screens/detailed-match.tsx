@@ -1,5 +1,7 @@
 import Rect, {
-	useMemo
+	useMemo,
+	useState,
+	useCallback
 } from "react";
 
 import {
@@ -11,6 +13,7 @@ import {
 	VStack,
 	Divider,
 	Heading,
+	useToast,
 	FlatList,
 	IconButton
 } from "native-base";
@@ -31,7 +34,12 @@ import {
 	DiscordButton
 } from "../components/discord-button";
 
-import { useMatch } from "../hooks/useMatch";
+import { Platform, Alert, Share} from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { Skeleton } from "../components/skeleton";
+import { useForm } from "../hooks/useForm";
+import { api } from "../services/api";
+import { IUser } from "../custom-types.d";
 
 type PlayerType = {
 	name:string;
@@ -40,18 +48,100 @@ type PlayerType = {
 	id:string;
 }
 
+type DetailedMatchProps = {
+	navigation: any;
+	route: {
+		params: {
+			matchId: string;
+		}
+	}
+}
+
 const renderPlayers = (player:PlayerType) => (
 	<PlayerCard player={player.item} />
 );
 
 const extractKey = (player:PlayerType) => player.id;
 
-function DetailedMatch({ navigation }:any) {
-	const { matches, matchId } = useMatch()
+function DetailedMatch({
+	navigation, route
+}: DetailedMatchProps) {
+	const { matches } = useForm()
+	const [ members, setMembers] = useState<IUser[]>([])
+	const [invite, setInvite] = useState<string|null>(null)
+	const [loading, setLoading] = useState(true)
+	const toast = useToast()
 
 	const { guild, ...match } = useMemo(()=>{
-		return matches.find(item => item.id === matchId)
-	},[matchId])
+		const { matchId } = route.params
+		const { guild, ...match } =  matches.find(item => item.id === matchId)
+
+		try {
+			setLoading(true)
+			api.get(`/guilds/${guild.id}/widget.json`)
+				.then(({ data }) => {
+					setInvite(data.instant_invite)
+	
+					const peoples = (data.members.filter(
+						member => member.status === "online"
+					)).map(member => ({
+						...member,
+						name: member.username.split(" ")[0],
+						avatar: member.avatar_url,
+						available: member.status === "online"
+					})) as IUser[]
+	
+					setMembers(peoples)
+
+				}).catch(err => console.log(err))
+		} catch {
+			console.error("Failed retrieving members list.")
+		} finally {
+			setLoading(false)
+		}
+
+		return {
+			...match,
+			guild
+		}
+	},[])
+
+	function handleShareInvitationLink() {
+		const message = "Only ademiros can share invitation links!"
+		if (!guild.owner) {
+			switch (Platform.OS) {
+				case "android":
+					toast.show({ description: message })
+					break;
+				default:
+					Alert.alert(
+						"Operation not allowed",
+						message
+					)
+					break;
+			}
+			return;
+		}
+
+		Share.share({message})
+	}
+
+	function handleOpenInvitationLink() {
+		const message = "Only ademiros can use invitation links!"
+		if (!guild.owner) {
+			switch (Platform.OS) {
+				case "android":
+					toast.show({ description: message })
+					break;
+				default:
+					Alert.alert(
+						"Operation not allowed",
+						message
+					)
+					break;
+			}
+		}
+	}
 
 	return (
 		<VStack
@@ -61,10 +151,11 @@ function DetailedMatch({ navigation }:any) {
 		>
 			<Header
 				title="Match"
-				goBack={()=>navigation.goBack()}
+				goBack={navigation.goBack}
 				action={
 					<IconButton
 						bg="transparent"
+						onPress={handleShareInvitationLink}
 						_pressed={{
 							bg: "transparent",
 							opacity: 0.68
@@ -74,7 +165,7 @@ function DetailedMatch({ navigation }:any) {
 								as={MaterialCommunityIcons}
 								name="share-variant"
 								size={8}
-								color="red.700"
+								color={guild.owner ? "red.700" : "gray.500"}
 							/>
 						}
 					/>
@@ -163,34 +254,41 @@ function DetailedMatch({ navigation }:any) {
 					color="gray.400"
 					fontSize={16}
 				>
-					Total {guild.players.length}
+					Total {members.length}
 				</Text>
 			</HStack>
 
-			<VStack
-				height="45%"
-				mb={6}
-			>
-				<FlatList
-					width="full"
-					ItemSeparatorComponent={() => (
-						<Divider
-							width="80%"
-							mr={0}
-							ml="auto"
-							bg="darkBlue.700"
-							borderRadius={10}
-						/>
-					)}
-					data={guild.players}
-					renderItem={renderPlayers}
-					keyExtractor={extractKey}
-				/>
-			</VStack>
+			{loading ? (
+				<Skeleton type="match" />
+			) :(
+				<VStack
+					height="45%"
+					mb={6}
+				>
+					<FlatList
+						width="full"
+						ItemSeparatorComponent={() => (
+							<Divider
+								width="80%"
+								mr={0}
+								ml="auto"
+								bg="darkBlue.700"
+								borderRadius={10}
+							/>
+						)}
+						data={members}
+						renderItem={renderPlayers}
+						keyExtractor={extractKey}
+					/>
+				</VStack>
+			)}
 
 			<DiscordButton
 				title="Join Discord server"
+				bg={!guild.owner ? "gray.500" : ""}
+				onPress={handleOpenInvitationLink}
 			/>
+			<Text>lol</Text>
 		</VStack>
 	)
 }

@@ -14,30 +14,12 @@ import {
 } from "@expo/vector-icons";
 
 import {
-	storeData
-} from "../services/storage";
-
-import {
 	DiscordButton
 } from "../components/discord-button";
 
 import { useAuth } from "../hooks/useAuth";
-import { useMatch } from "../hooks/useMatch";
-
-import { matches as mockedData } from "../mock.json";
 function LoginScreen({ navigation }: any) {
-	const { signIn, user } = useAuth()
-	const { key } = useMatch()
-
-	function goHome() {
-		navigation.navigate('Home')
-	}
-
-	useEffect(() => {
-		if(Object.entries(user).length) {
-			goHome()
-		}
-	}, [user])
+	const { signIn } = useAuth()
 
 	return (
 		<Flex
