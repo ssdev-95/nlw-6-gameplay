@@ -35,10 +35,10 @@ function ScheduleMatch({ navigation }:any) {
 		guild,
 		selectGuild,
 		resetFields,
-		handleChange
+		handleChange,
+		scheduleMatch
 	} = useForm()
 
-	const { scheduleMatch } = useMatch()
 	const { user } = useAuth()
 
 	async function handleSubmit() {

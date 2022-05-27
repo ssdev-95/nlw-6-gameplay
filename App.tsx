@@ -6,7 +6,6 @@ import {
 	NativeBaseProvider, extendTheme
 } from "native-base";
 import { AuthProvider } from "./hooks/useAuth";
-import { MatchProvider } from "./hooks/useMatch";
 import { FormProvider } from "./hooks/useForm";
 
 const theme = extendTheme({
@@ -25,12 +24,10 @@ function App() {
   return (
 		<NativeBaseProvider theme={theme}>
 			<FormProvider>
-				<MatchProvider>
-					<AuthProvider>
-						<StackNavigator />
-						<StatusBar style="light" />
-					</AuthProvider>
-				</MatchProvider>
+				<AuthProvider>
+					<StackNavigator />
+					<StatusBar style="light" />
+				</AuthProvider>
 			</FormProvider>
 		</NativeBaseProvider>
   );

@@ -36,6 +36,7 @@ import {
 
 import { Platform, Alert, Share} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import * as Linking from 'expo-linking';
 import { Skeleton } from "../components/skeleton";
 import { useForm } from "../hooks/useForm";
 import { api } from "../services/api";
@@ -123,7 +124,7 @@ function DetailedMatch({
 			return;
 		}
 
-		Share.share({message})
+		Share.share({message:invite})
 	}
 
 	function handleOpenInvitationLink() {
@@ -140,7 +141,11 @@ function DetailedMatch({
 					)
 					break;
 			}
+
+			return;
 		}
+
+		Linking.openURL(invite)
 	}
 
 	return (
