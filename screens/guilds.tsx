@@ -63,7 +63,9 @@ function Guilds({ navigation }) {
 	);
 
 	return (
-		<Background>
+		<VStack
+			bg="transparent"
+		>
 		<Animated.View
 			entering={SlideInDown.duration(1000)}
 			style={{
@@ -72,6 +74,7 @@ function Guilds({ navigation }) {
 			pt:16
 			}}
 		>
+		<Background>
 			<Divider
 				width={38}
 				height={1}
@@ -112,8 +115,9 @@ function Guilds({ navigation }) {
 				/>
 			</Box>
 			)}
-		</Animated.View>
 		</Background>
+		</Animated.View>
+		</VStack>
 	)
 }
 
