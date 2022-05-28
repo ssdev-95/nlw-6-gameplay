@@ -58,7 +58,7 @@ $ npm run start
 
 > ⚠️  Caution
 > 
-> An extra `.env` file may needed to be setup with appropriate variables, see `.env.example` to get in touch with them.
+> An extra `.env` file may need to be setup with appropriate variables, see `.env.example` to get in touch with them.
 
 
 > **Animated with [Reanimated V2]()**
