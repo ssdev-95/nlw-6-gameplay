@@ -1,8 +1,15 @@
+<p align="center">
 <img src="https://raw.githubusercontent.com/xSallus/nlw-6-gameplay/main/assets/adaptive-icon.png" height="124px" width="auto" alt="Full icon" />
+</p>
+
 
 # An app to easier match makes with mates.
 
-&nbsp;&nbsp;&nbsp;![A preview gif](https://raw.githubusercontent.com/xSallus/nlw-6-gameplay/main/assets/gameplay_final_preview.gif)
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/xSallus/nlw-6-gameplay/main/assets/gameplay_final_preview.gif" alt="A preview gif" />
+</p>
+
 
 ## Features
 
