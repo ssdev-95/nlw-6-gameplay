@@ -23,6 +23,7 @@ import {
 } from "../components/categories"
 
 import { Form } from "../components/form";
+import { Background } from "../components/background";
 import { useMatch } from "../hooks/useMatch";
 import { useAuth } from "../hooks/useAuth";
 import { useForm } from "../hooks/useForm";
@@ -65,11 +66,16 @@ function ScheduleMatch({ navigation }:any) {
 	}
 
 	return (
+	<Background
+		style={{
+			width:"100%",
+			height:"100%"
+		}}
+	>
 		<KeyboardAvoidingView
 				_android={{ behavior: "height" }}
 				_ios={{ behavior: "padding" }}
 				height="full"
-				bg="gameplay.background"
 				py={10}
 				px={2}
 		>
@@ -92,6 +98,7 @@ function ScheduleMatch({ navigation }:any) {
 				/>
 			</ScrollView>
 		</KeyboardAvoidingView>
+	</Background>
 	)
 }
 

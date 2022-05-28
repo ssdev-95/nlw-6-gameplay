@@ -7,6 +7,8 @@ import {
 	Center,
 	HStack,
 	VStack,
+	Divider,
+	Heading,
 	ButtonProps
 } from "native-base";
 
@@ -15,19 +17,8 @@ import {
 } from "@expo/vector-icons";
 
 import { GuildBadge } from "./guild-badge";
+import { AnimatedCard } from "./animated-card-basis";
 import { IMatch } from "../custom-types.d";
-
-
-/*{ 
-id: string;
-subject: string;               //title                
-squad: Omit<ISquad, "players"> //players group
-players_count: number;         //default is 1
-date: string;                  //match date
-category: string;
-created_by: string;
-}*/
-
 
 type MatchCardProps = ButtonProps & {
 	match: IMatch
@@ -37,10 +28,11 @@ export function MatchCard({
 	match, ...rest
 }: MatchCardProps) {
 	return (
+		<AnimatedCard>
 		<Button
 			bg="transparent"
 			_pressed={{
-				bg: "transparent",
+				bg: "darkBlue.700",
 				borderWidth: 1,
 				borderColor: "darkBlue.500"
 			}}
@@ -48,78 +40,89 @@ export function MatchCard({
 			height={24}
 			my={2}
 			borderRadius={8}
-			px={6}
+			borderColor="darkBlue.500"
+			borderWidth={1}
+			px={3}
 			{...rest}
+			justifyContent="flex-start"
+			bg="transparent"
 		>
 			<HStack
-				height="full"
-				width="full"
-				space={1}
+				ml={0}
+				space={4}
 			>
 				<GuildBadge guild={match.guild} />
 				<VStack
+					maxWidth="full"
 					height="full"
-					width="90%"
-					justifyContent="space-evenly"
+					space={4}
 				>
+					<Heading
+						color="blue.50"
+						fontSize={24}
+					>
+						{match.guild.name}
+					</Heading>
 					<HStack
-						width="full"
+						space={2}
 						alignItems="center"
 					>
-						<Text
-							color="blue.50"
-							fontSize={24}
-						>
-							{match.guild.name}
-						</Text>
-						<Text
-							color="gray.400"
-							ml="14%"
-						>
-							{match.category}
-						</Text>
-					</HStack>
-
-					<Text color="gray.400">
-						{match.guild.owner ? "Ademiro" : "Guest"}
-					</Text>
-
-					<HStack
-						width="full"
-						alignItems="center"
-					>
-						<HStack space={2}>
 						<Icon
 							as={MaterialCommunityIcons}
 							name="calendar-blank"
-							color="red.700"
-							size={5}
+							color="darkBlue.100"
+							size={4}
 						/>
-						<Text color="blue.50">
-							{match.date}
-						</Text>
-						</HStack>
-						<HStack
-							ml="20%"
-							alignItems="center"
-							space={2}
-						>
-						<Icon
-							as={MaterialCommunityIcons}
-							name="account"
-							color="red.700"
-							size={5}
-					  />
-						{/*<Text
-							color="blue.50"
+						<Text
+							color="darkBlue.100"
 							fontSize={16}
 						>
-							{match.guild.players.length}
-						</Text>*/}
-						</HStack>
+							{match.date}
+						</Text>
 					</HStack>
+				</VStack>
+				<VStack
+					maxWidth="full"
+					height="full"
+					space={4}
+					ml="12%"
+					alignItems="center"
+				>
+					<Text
+						textAlign="right"
+						fontSize={18}
+						color="gray.400"
+					>
+						{match.category}
+					</Text>
+					<Text
+						fomtSize={16}
+						mt={1}
+						color={
+							match.guild.owner ?
+							"green.700" :
+							"gray.500"
+						}
+					>
+						<Divider
+							size={2}
+							borderRadius={8}
+							pr={4}
+							bg={
+								match.guild.owner ?
+								"green.700" :
+								"gray.500"
+							}
+						/>
+						{
+							match.guild.owner ?
+							" Ademiro" :
+							" Guest"
+						}
+					</Text>
 				</VStack>
 			</HStack>
 		</Button>
+		</AnimatedCard>
 	);
 }

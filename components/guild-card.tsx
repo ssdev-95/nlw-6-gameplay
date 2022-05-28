@@ -12,6 +12,7 @@ import {
 
 import { Feather } from "@expo/vector-icons";
 import { GuildBadge } from "./guild-badge";
+import { AnimatedCard } from "./animated-card-basis";
 import { IGuild } from "../custom-types.d";
 
 type Props = TouchableOpacityProps & {
@@ -20,6 +21,7 @@ type Props = TouchableOpacityProps & {
 
 export function GuildCard({ guild, ...rest }:Props) {
 	return (
+	<AnimatedCard>
 		<Button
 			bg="transparent"
 			_pressed={{
@@ -52,5 +54,6 @@ export function GuildCard({ guild, ...rest }:Props) {
 				/>
 			</HStack>
 		</Button>
+	</AnimatedCard>
 	)
 }

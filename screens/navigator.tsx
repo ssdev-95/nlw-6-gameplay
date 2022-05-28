@@ -15,7 +15,6 @@ import {
 
 import { useAuth } from "../hooks/useAuth";
 
-
 const Stack = createNativeStackNavigator();
 const screenOptions = { headerShown: false };
 
@@ -23,39 +22,41 @@ function StackNavigator() {
 	const { user } = useAuth()
 
 	return (
-		<>{ Object.entries(user).length ? (
-		<NavigationContainer>
-			<Stack.Navigator
-				initialRouteName="Home"
-				screenOptions={screenOptions}
-			>
-				<Stack.Screen
-					name="Home"
-					component={HomeScreen}
-				/>
+		<>
+			{ Object.entries(user).length ? (
+				<NavigationContainer>
+					<Stack.Navigator
+						initialRouteName="Home"
+						screenOptions={screenOptions}
+					>
+						<Stack.Screen
+							name="Home"
+							component={HomeScreen}
+						/>
 
-				<Stack.Screen
-					name="ScheduleMatch"
-					component={ScheduleMatch}
-				/>
+						<Stack.Screen
+							name="ScheduleMatch"
+							component={ScheduleMatch}
+						/>
 
-				<Stack.Screen
-					name="DetailedMatch"
-					component={DetailedMatch}
-				/>
+						<Stack.Screen
+							name="DetailedMatch"
+							component={DetailedMatch}
+						/>
 
-				<Stack.Screen
-					name="Guilds"
-					component={Guilds}
-					options={{
-						presentation:"transparentModal"
-					}}
-				/>
-			</Stack.Navigator>
-			</NavigationContainer>
-		) : (
-			<LoginScreen />
-		)}</>
+						<Stack.Screen
+							name="Guilds"
+							component={Guilds}
+							options={{
+								presentation:"transparentModal"
+							}}
+						/>
+					</Stack.Navigator>
+				</NavigationContainer>
+			) : (
+				<LoginScreen />
+			)}
+		</>
  )
 }
 

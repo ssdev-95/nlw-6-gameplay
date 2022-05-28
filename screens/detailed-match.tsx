@@ -37,6 +37,7 @@ import {
 import { Platform, Alert, Share} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import * as Linking from 'expo-linking';
+import { Background } from "../components/background";
 import { Skeleton } from "../components/skeleton";
 import { useForm } from "../hooks/useForm";
 import { api } from "../services/api";
@@ -97,8 +98,12 @@ function DetailedMatch({
 				}).catch(err => console.log(err))
 		} catch {
 			console.error("Failed retrieving members list.")
+			return
 		} finally {
-			setLoading(false)
+			setTimeout(
+				()=>setLoading(false),
+				3000
+			)
 		}
 
 		return {
@@ -109,7 +114,7 @@ function DetailedMatch({
 
 	function handleShareInvitationLink() {
 		const message = "Only ademiros can share invitation links!"
-		if (!guild.owner) {
+		if (!guild.owner && invite) {
 			switch (Platform.OS) {
 				case "android":
 					toast.show({ description: message })
@@ -129,7 +134,7 @@ function DetailedMatch({
 
 	function handleOpenInvitationLink() {
 		const message = "Only ademiros can use invitation links!"
-		if (!guild.owner) {
+		if (!guild.owner && invite) {
 			switch (Platform.OS) {
 				case "android":
 					toast.show({ description: message })
@@ -149,152 +154,154 @@ function DetailedMatch({
 	}
 
 	return (
-		<VStack
-			height="full"
-			bg="gameplay.background"
-			py={10}
-		>
-			<Header
-				title="Match"
-				goBack={navigation.goBack}
-				action={
-					<IconButton
-						bg="transparent"
-						onPress={handleShareInvitationLink}
-						_pressed={{
-							bg: "transparent",
-							opacity: 0.68
-						}}
-						icon={
-							<Icon
-								as={MaterialCommunityIcons}
-								name="share-variant"
-								size={8}
-								color={guild.owner ? "red.700" : "gray.500"}
-							/>
-						}
-					/>
-				}
-			/>
-			<Box width="full" position="relative">
-				<Image
-					source={require("../assets/banner.png")}
-					width="full"
-					alt="A lol image"
+	<Background
+		style={{
+			height:"100%",
+			paddingTop:35,
+			paddingBottom:35
+		}}
+	>
+		<Header
+			title="Match"
+			goBack={navigation.goBack}
+			action={
+				<IconButton
+					bg="transparent"
+					onPress={handleShareInvitationLink}
+					_pressed={{
+						bg: "transparent",
+						opacity: 0.68
+					}}
+					icon={
+						<Icon
+							as={MaterialCommunityIcons}
+							name="share-variant"
+							size={8}
+							color={guild.owner ? "red.700" : "gray.500"}
+						/>
+					}
 				/>
-				<VStack
-					height={20}
-					space={2}
-					position="absolute"
-					bottom={8}
-					left={8}
+			}
+		/>
+		<Box width="full" position="relative">
+			<Image
+				source={require("../assets/banner.png")}
+				width="full"
+				alt="A lol image"
+			/>
+			<VStack
+				height={20}
+				space={2}
+				position="absolute"
+				bottom={8}
+				left={8}
+			>
+				<Heading
+					color="blue.50"
+					fontSize={36}
+				  lineHeight={32}
+					mb={4}
 				>
-					<Heading
-						color="blue.50"
-						fontSize={36}
-					  lineHeight={32}
-						mb={4}
+					{guild.name}
+				</Heading>
+
+				<Text
+					fontSize={16}
+					fontWeight={400}
+					color="blue.200"
+				>
+					{match.description}
+				</Text>
+
+				<HStack
+					space={3}
+					alignItems="center"
+				>
+					<Icon
+						as={MaterialCommunityIcons}
+						name="calendar-blank"
+						color="red.500"
+						size={4}
+					/>
+					<Text
+						color="gray.500"
+						fontSize={16}
 					>
-						{guild.name}
-					</Heading>
+						{match.date}
+					</Text>
 
 					<Text
 						fontSize={16}
+						color="gray.500"
 						fontWeight={400}
-						color="blue.200"
 					>
-						{match.description}
+						{" - "}
 					</Text>
-
-					<HStack
-						space={3}
-						alignItems="center"
-					>
-						<Icon
-							as={MaterialCommunityIcons}
-							name="calendar-blank"
-							color="red.500"
-							size={4}
-						/>
-						<Text
-							color="gray.500"
-							fontSize={16}
-						>
-							{match.date}
-						</Text>
-
-						<Text
-							fontSize={16}
-							color="gray.500"
-							fontWeight={400}
-						>
-							{" - "}
-						</Text>
 						
-						<Text
-							fontSize={16}
-							fontWeight={400}
-							color="gray.500"                            
-						>
-							{guild.owner ? "Ademiro" : "Guest"}
-						</Text>
-					</HStack>
-				</VStack>
-			</Box>
-			<HStack
-				width="full"
-				justifyContent="space-between"
-				alignItems="center"
-				px={4}
-				pt={12}
-				pb={6}
+					<Text
+						fontSize={16}
+						fontWeight={400}
+						color="gray.500"                            
+					>
+						{guild.owner ? "Ademiro" : "Guest"}
+					</Text>
+				</HStack>
+			</VStack>
+		</Box>
+		<HStack
+			width="full"
+			justifyContent="space-between"
+			alignItems="center"
+			px={4}
+			pt={12}
+			pb={6}
+		>
+			<Text
+				color="blue.50"
+				fontSize={24}
 			>
-				<Text
-					color="blue.50"
-					fontSize={24}
-				>
-				Players
-				</Text>
-				<Text
-					color="gray.400"
-					fontSize={16}
-				>
-					Total {members.length}
-				</Text>
-			</HStack>
+			Players
+			</Text>
+			<Text
+				color="gray.400"
+				fontSize={16}
+			>
+				Total {members.length}
+			</Text>
+		</HStack>
 
-			{loading ? (
-				<Skeleton type="match" />
-			) :(
-				<VStack
-					height="45%"
-					mb={6}
-				>
-					<FlatList
-						width="full"
-						ItemSeparatorComponent={() => (
-							<Divider
-								width="80%"
-								mr={0}
-								ml="auto"
-								bg="darkBlue.700"
-								borderRadius={10}
-							/>
-						)}
-						data={members}
-						renderItem={renderPlayers}
-						keyExtractor={extractKey}
-					/>
-				</VStack>
-			)}
+		{loading ? (
+			<Skeleton type="match" />
+		) : (
+			<VStack
+				height="45%"
+				mb={6}
+			>
+				<FlatList
+					width="full"
+					ItemSeparatorComponent={() => (
+						<Divider
+							width="80%"
+							mr={0}
+							ml="auto"
+							bg="darkBlue.700"
+							borderRadius={10}
+						/>
+					)}
+					data={members}
+					renderItem={renderPlayers}
+					keyExtractor={extractKey}
+				/>
+			</VStack>
+		)}
 
-			<DiscordButton
-				title="Join Discord server"
-				bg={!guild.owner ? "gray.500" : ""}
-				onPress={handleOpenInvitationLink}
-			/>
-			<Text>lol</Text>
-		</VStack>
+		<DiscordButton
+			title="Join Discord server"
+			bg={!guild.owner ? "gray.500" : ""}
+			onPress={handleOpenInvitationLink}
+		/>
+		<Text>lol</Text>
+	</Background>
 	)
 }
 

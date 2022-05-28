@@ -11,8 +11,11 @@ import  {
 	FlatList
 } from "native-base";
 
+import Animated, {
+	SlideInDown
+} from "react-native-reanimated";
 import { useFocusEffect } from "@react-navigation/native";
-
+import { Background } from "../components/background";
 import { Skeleton } from "../components/skeleton";
 import { GuildCard } from "../components/guild-card";
 import { useForm } from "../hooks/useForm";
@@ -60,16 +63,19 @@ function Guilds({ navigation }) {
 	);
 
 	return (
-		<VStack
-			height="full"
-			width="full"
-			pt={8}
-			bg="gameplay.background"
+		<Background>
+		<Animated.View
+			entering={SlideInDown.duration(1000)}
+			style={{
+			height:"100%",
+			width:"100%",
+			pt:16
+			}}
 		>
 			<Divider
 				width={38}
 				height={1}
-				mt={4}
+				mt={45}
 				mx="auto"
 				bg="darkBlue.600"
 				borderRadius={2}
@@ -106,7 +112,8 @@ function Guilds({ navigation }) {
 				/>
 			</Box>
 			)}
-		</VStack>
+		</Animated.View>
+		</Background>
 	)
 }
 

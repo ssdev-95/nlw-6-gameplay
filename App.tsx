@@ -2,9 +2,11 @@ import React from "react";
 import { LogBox } from "react-native";
 import StackNavigator from "./screens/navigator";
 import { StatusBar } from "expo-status-bar";
+
 import {
 	NativeBaseProvider, extendTheme
 } from "native-base";
+
 import { AuthProvider } from "./hooks/useAuth";
 import { FormProvider } from "./hooks/useForm";
 

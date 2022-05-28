@@ -9,6 +9,8 @@ import {
 	HStack
 } from "native-base";
 
+import Animated, { FadeIn } from "react-native-reanimated";
+
 import {
 	MaterialCommunityIcons
 } from "@expo/vector-icons";
@@ -17,15 +19,20 @@ import {
 	DiscordButton
 } from "../components/discord-button";
 
+import { Background } from "../components/background";
 import { useAuth } from "../hooks/useAuth";
 function LoginScreen({ navigation }: any) {
 	const { signIn } = useAuth()
 
 	return (
-		<Flex
-			width="full"
-			height="full"
-			bg="gameplay.background"
+	<Background>
+		<Animated.View
+			entering={FadeIn.duration(1000)}
+			style={{
+				width:"100%",
+				height:"100%",
+				paddingTop: 30
+			}}
 		>
 			<Image
 				source={require("../assets/illustration.png")}
@@ -61,7 +68,8 @@ function LoginScreen({ navigation }: any) {
 					onPress={signIn}
 				/>
 			</VStack>
-		</Flex>
+		</Animated.View>
+	</Background>
 	);
 }
 

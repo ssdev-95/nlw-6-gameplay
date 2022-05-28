@@ -13,6 +13,10 @@ import {
 	MaterialCommunityIcons
 } from "@expo/vector-icons";
 
+import Animated, {
+	SlideInDown
+} from "react-native-reanimated";
+
 type DiscordButtonProps = {
 	title:string;
 	onPress?: ()=>void;
@@ -25,6 +29,9 @@ export function DiscordButton({
 	onPress
 }: DiscordButtonProps) {
 	return (
+	<Animated.View
+		entering={SlideInDown.duration(1000)}
+	>
 		<IconButton
 			bg={bg ? bg : "red.800"}
 			borderRadius={8}
@@ -60,5 +67,6 @@ export function DiscordButton({
 				</HStack>
 			}
 		/>
+	</Animated.View>
 	)
 }

@@ -12,6 +12,8 @@ import {
 	MaterialCommunityIcons
 } from "@expo/vector-icons";
 
+import { AnimatedCard } from "./animated-card-basis";
+
 type PlayerType = {
 	name:string;
 	avatar:string;
@@ -24,6 +26,7 @@ type CardProps = {
 
 export function PlayerCard({ player }: CardProps) {
 	return (
+	<AnimatedCard>
 		<Box
 			mt={2}
 			py={2}
@@ -74,5 +77,6 @@ export function PlayerCard({ player }: CardProps) {
 				</VStack>
 			</HStack>
 		</Box>
+	</AnimatedCard>
 	)
 }

@@ -6,12 +6,12 @@ import React, {
 
 import { useFocusEffect } from "@react-navigation/native";
 
-
 import {
 	Box,
 	VStack
 } from "native-base";
 
+import { Background } from "../components/background";
 import { Header } from "../components/header";
 import { Categories } from "../components/categories";
 import { Matches } from "../components/matches";
@@ -45,12 +45,16 @@ function HomeScreen({ navigation }: any) {
 	}, [loading])
 
 	return (
-		<VStack
-			py={10}
-			px={2}
-			width="full"
-			height="full"
-			bg="gameplay.background"
+		<Background
+			style={{
+				paddingTop:45,
+				paddingBottom:45,
+				paddingLeft:10,
+				paddingRight:10,
+				width:"100%",
+				height:"100%",
+				background:"transparent"
+			}}
 		>
 			<Header action={() => {
 				navigation.navigate('ScheduleMatch')
@@ -65,7 +69,7 @@ function HomeScreen({ navigation }: any) {
 					}}
 				/>
 			)}
-		</VStack>
+		</Background>
 	)
 }
 
