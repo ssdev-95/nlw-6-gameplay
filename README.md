@@ -61,5 +61,5 @@ $ npm run start
 > An extra `.env` file may need to be setup with appropriate variables, see `.env.example` to get in touch with them.
 
 
-> **Animated with [Reanimated V2]()**
+> **Animated with [Reanimated v2](https://docs.swmansion.com/react-native-reanimated/)**
 > xSallus, 2022 - **NLW Together.**
