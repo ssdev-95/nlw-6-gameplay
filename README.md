@@ -62,4 +62,5 @@ $ npm run start
 
 
 > **Animated with [Reanimated v2](https://docs.swmansion.com/react-native-reanimated/)**
+> 
 > xSallus, 2022 - **NLW Together.**
