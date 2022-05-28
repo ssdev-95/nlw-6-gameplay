@@ -1,7 +1,8 @@
-# Gameplay
+<img src="https://raw.githubusercontent.com/xSallus/nlw-6-gameplay/main/assets/adaptive-icon.png" height="124px" width="auto" alt="Full icon" />
 
 # An app to easier match makes with mates.
 
+&nbsp;&nbsp;&nbsp;![A preview gif](https://raw.githubusercontent.com/xSallus/nlw-6-gameplay/main/assets/gameplay_final_preview.gif)
 
 ## Features
 
@@ -48,9 +49,10 @@ $ npm run start
 ```
 
 
->> ⚠️  Caution
->> An extra `.env` file may be needed setup with appropriate variables, see `.env.example` to get in touch with them.
+> ⚠️  Caution
+> 
+> An extra `.env` file may be needed setup with appropriate variables, see `.env.example` to get in touch with them.
 
 
->> **Animated with [Reanimated V2]()**
->> xSallus, 2022 - **NLW Together.**
+> **Animated with [Reanimated V2]()**
+> xSallus, 2022 - **NLW Together.**
